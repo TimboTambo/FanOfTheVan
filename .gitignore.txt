@@ -1,5 +1,0 @@
-*.lock
-debug/
-obj/
-*.dll
-.vs/
