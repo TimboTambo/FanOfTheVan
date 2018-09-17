@@ -5,14 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FanOfTheVan.Models;
+using FanOfTheVan.Services;
+using FanOfTheVan.Services.Models;
+using MongoDB.Bson;
 
 namespace FanOfTheVan.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IMarketService _marketService;
+
+        public HomeController(IMarketService marketService)
+        {
+            _marketService = marketService;
+        }
+
+        [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            var markets = _marketService.GetAllMarkets();
+            return View(markets);
         }
 
         public IActionResult About()
@@ -32,6 +44,27 @@ namespace FanOfTheVan.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public IActionResult Create(Market newMarket)
+        {
+            _marketService.CreateMarket(newMarket);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(string marketId)
+        {
+            var market = _marketService.GetMarket(marketId);
+            return View(market);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Market market)
+        {
+            _marketService.UpdateMarket(market);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,4 +1,8 @@
 ﻿using System;
+using FanOfTheVan.Services;
+using FanOfTheVan.Services.Implementation.Repositories;
+using FanOfTheVan.Services.Implementation.Repositories.Implementations;
+using FanOfTheVan.Services.Implementation.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FanOfTheVan.IOC
@@ -7,7 +11,8 @@ namespace FanOfTheVan.IOC
     {
         public void RegisterServices(IServiceCollection services)
         {
-            
+            services.AddTransient<IMarketService, MarketService>();
+            services.AddTransient<IMarketRepository, MongoRepository>();
         }
     }
 }

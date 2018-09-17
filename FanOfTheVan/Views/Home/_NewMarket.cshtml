@@ -1,0 +1,75 @@
+﻿@model FanOfTheVan.Services.Models.Market
+
+@using (Html.BeginForm("Create", "Home"))
+{
+    <div class="mb20 mt30">
+        Name: @Html.EditorFor(x => x.Name)
+    </div>
+    <div class="mb20">
+        Description: @Html.EditorFor(x => x.Description)
+    </div>
+    <div class="mb20">
+        Latitude: @Html.EditorFor(x => x.Latitude)
+    </div>
+    <div class="mb20">
+        Longitude: @Html.EditorFor(x => x.Longitude)
+    </div>
+    <div class="mb20">
+        <div class="mb10">Street address: @Html.EditorFor(x => x.StreetAddress)</div>
+        <div class="mb10">City: @Html.EditorFor(x => x.City)</div>
+        <div class="mb10">Postcode: @Html.EditorFor(x => x.Postcode)</div>
+    </div>
+    <div class="mb20">
+        Hours
+        <div class="mb20">
+            Monday: @Html.EditorFor(x => x.MondayOpen.OpenTime) to @Html.EditorFor(x => x.MondayOpen.CloseTime)
+            <div class="mt10 mb10">
+                Repeat type: @Html.EditorFor(x => x.MondayOpen.RepeatRule.RepeatType)
+                Repeat week of month: @Html.EditorFor(x => x.MondayOpen.RepeatRule.WeekOfMonth)
+            </div>
+        </div>
+        <div class="mb20">
+            Tuesday: @Html.EditorFor(x => x.TuesdayOpen.OpenTime) to @Html.EditorFor(x => x.TuesdayOpen.CloseTime)
+            <div class="mt10 mb10">
+                Repeat type: @Html.EditorFor(x => x.TuesdayOpen.RepeatRule.RepeatType)
+                Repeat week of month: @Html.EditorFor(x => x.TuesdayOpen.RepeatRule.WeekOfMonth)
+            </div>
+        </div>
+        <div class="mb20">
+            Wednesday: @Html.EditorFor(x => x.WednesdayOpen.OpenTime) to @Html.EditorFor(x => x.WednesdayOpen.CloseTime)
+            <div class="mt10 mb10">
+                Repeat type: @Html.EditorFor(x => x.WednesdayOpen.RepeatRule.RepeatType)
+                Repeat week of month: @Html.EditorFor(x => x.WednesdayOpen.RepeatRule.WeekOfMonth)
+            </div>
+        </div>
+        <div class="mb20">
+            Thursday: @Html.EditorFor(x => x.ThursdayOpen.OpenTime) to @Html.EditorFor(x => x.ThursdayOpen.CloseTime)
+            <div class="mt10 mb10">
+                Repeat type: @Html.EditorFor(x => x.ThursdayOpen.RepeatRule.RepeatType)
+                Repeat week of month: @Html.EditorFor(x => x.ThursdayOpen.RepeatRule.WeekOfMonth)
+            </div>
+        </div>
+        <div class="mb20">
+            Friday: @Html.EditorFor(x => x.FridayOpen.OpenTime) to @Html.EditorFor(x => x.FridayOpen.CloseTime)
+            <div class="mt10 mb10">
+                Repeat type: @Html.EditorFor(x => x.FridayOpen.RepeatRule.RepeatType)
+                Repeat week of month: @Html.EditorFor(x => x.FridayOpen.RepeatRule.WeekOfMonth)
+            </div>
+        </div>
+        <div class="mb20">
+            Saturday: @Html.EditorFor(x => x.SaturdayOpen.OpenTime) to @Html.EditorFor(x => x.SaturdayOpen.CloseTime)
+            <div class="mt10 mb10">
+                Repeat type: @Html.EditorFor(x => x.SaturdayOpen.RepeatRule.RepeatType)
+                Repeat week of month: @Html.EditorFor(x => x.SaturdayOpen.RepeatRule.WeekOfMonth)
+            </div>
+        </div>
+        <div class="mb20">
+            Sunday: @Html.EditorFor(x => x.SundayOpen.OpenTime) to @Html.EditorFor(x => x.SundayOpen.CloseTime)
+            <div class="mt10 mb10">
+                Repeat type: @Html.EditorFor(x => x.SundayOpen.RepeatRule.RepeatType)
+                Repeat week of month: @Html.EditorFor(x => x.SundayOpen.RepeatRule.WeekOfMonth)
+            </div>
+        </div>
+    </div>
+    <button type="submit">Submit</button>
+}

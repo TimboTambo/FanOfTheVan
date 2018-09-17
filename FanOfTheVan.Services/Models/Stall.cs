@@ -14,5 +14,6 @@ namespace FanOfTheVan.Services.Models
         public int PrimaryPhotoId { get; set; }
         public List<Cuisine> Cuisines { get; set; }
         public Menu Menu { get; set; }
+        public List<StallTag> Tags { get; set; }
     }
 }

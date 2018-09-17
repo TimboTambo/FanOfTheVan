@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FanOfTheVan.Data;
+using FanOfTheVan.IOC;
 using FanOfTheVan.Models;
 using FanOfTheVan.Services;
 
@@ -37,6 +38,9 @@ namespace FanOfTheVan
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+
+            var servicesRegistrar = new ServicesRegistrar();
+            servicesRegistrar.RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

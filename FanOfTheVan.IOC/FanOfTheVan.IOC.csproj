@@ -6,6 +6,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FanOfTheVan.Services.Implementation\FanOfTheVan.Services.Implementation.csproj" />
+    <ProjectReference Include="..\FanOfTheVan.Services\FanOfTheVan.Services.csproj" />
   </ItemGroup>
 
 </Project>

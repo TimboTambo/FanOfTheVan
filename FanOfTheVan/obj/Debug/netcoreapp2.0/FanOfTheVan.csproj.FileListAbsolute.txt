@@ -5,8 +5,15 @@ C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfT
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.pdb
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.csprojResolveAssemblyReference.cache
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.csproj.CoreCompileInputs.cache
-C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.AssemblyInfoInputs.cache
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.AssemblyInfo.cs
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.dll
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.IOC.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.IOC.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.csproj.CopyComplete
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
