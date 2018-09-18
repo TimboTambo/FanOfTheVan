@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FanOfTheVan.Services.Implementation.Repositories;
 using FanOfTheVan.Services.Models;
-using MongoDB.Bson;
 
 namespace FanOfTheVan.Services.Implementation.Services
 {
@@ -15,24 +14,24 @@ namespace FanOfTheVan.Services.Implementation.Services
             _repository = repository;
         }
 
-        public IMarket GetMarket(string marketId)
+        public async Task<IMarket> GetMarket(string marketId)
         {
-            return _repository.GetMarketById(marketId);
+            return await _repository.GetMarketById(marketId);
         }
 
-        public void CreateMarket(Market market)
+        public async Task CreateMarket(Market market)
         {
-            _repository.SaveMarket(market);
+            await _repository.SaveMarket(market);
         }
 
-        public IEnumerable<IMarket> GetAllMarkets()
+        public async Task<IEnumerable<IMarket>> GetAllMarkets()
         {
-            return _repository.GetAllMarkets();
+            return await _repository.GetAllMarkets();
         }
 
-        public void UpdateMarket(Market market)
+        public async Task UpdateMarket(Market market)
         {
-            _repository.UpdateMarket(market);
+            await _repository.UpdateMarket(market);
         }
     }
 }

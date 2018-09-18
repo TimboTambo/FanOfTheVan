@@ -20,24 +20,19 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Eat More Street</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="font-size: 30px; color: #e2d20b; font-weight: 600; word-spacing: 5px; letter-spacing: 5px">Eat More Street</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" style="float: right">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About" style="color: #e2d20b">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact" style="color: #e2d20b">Contact</a></li>
                 </ul>
-                @*@await Html.PartialAsync("_LoginPartial")*@
             </div>
         </div>
     </nav>
+    <div>
+        <img src="~/images/market_tops.jpg" style="width: 100%"/>
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />

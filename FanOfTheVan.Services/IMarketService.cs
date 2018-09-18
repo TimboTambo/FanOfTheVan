@@ -1,14 +1,14 @@
 ﻿using FanOfTheVan.Services.Models;
-using MongoDB.Bson;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FanOfTheVan.Services
 {
     public interface IMarketService
     {
-        IMarket GetMarket(string marketId);
-        void CreateMarket(Market market);
-        IEnumerable<IMarket> GetAllMarkets();
-        void UpdateMarket(Market market);
+        Task<IMarket> GetMarket(string marketId);
+        Task CreateMarket(Market market);
+        Task<IEnumerable<IMarket>> GetAllMarkets();
+        Task UpdateMarket(Market market);
     }
 }

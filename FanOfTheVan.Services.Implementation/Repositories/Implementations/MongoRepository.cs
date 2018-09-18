@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FanOfTheVan.Services.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -17,29 +18,31 @@ namespace FanOfTheVan.Services.Implementation.Repositories.Implementations
             _db = _client.GetDatabase("local");
         }
 
-        public IEnumerable<IMarket> GetAllMarkets()
+        public async Task<IEnumerable<IMarket>> GetAllMarkets()
         {
-            return _db.GetCollection<Market>("Markets").Find(_ => true).ToList();
+            var markets = await _db.GetCollection<Market>("Markets").FindAsync(_ => true);
+            return markets.ToList();
         }
 
-        public IMarket GetMarketById(string marketId)
+        public async Task<IMarket> GetMarketById(string marketId)
         {
             var collection = _db.GetCollection<Market>("Markets");
             var id = new ObjectId(marketId);
-            return collection.Find(x => x.MarketId == id).FirstOrDefault();
+            var market = await collection.FindAsync(x => x.MarketId == id);
+            return market.FirstOrDefault();
         }
 
-        public void SaveMarket(Market market)
+        public async Task SaveMarket(Market market)
         {
             var collection = _db.GetCollection<Market>("Markets");
-            collection.InsertOne(market);
+            await collection.InsertOneAsync(market);
         }
 
-        public void UpdateMarket(Market market)
+        public async Task UpdateMarket(Market market)
         {
             var collection = _db.GetCollection<Market>("Markets");
             var filter = Builders<Market>.Filter.Eq(x => x.MarketId, market.MarketId);
-            collection.ReplaceOne(filter, market);
+            await collection.ReplaceOneAsync(filter, market);
         }
     }
 }

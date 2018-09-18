@@ -4,7 +4,26 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row">
+
+<div style="text-align: center; margin: 50px 0px 100px 0px; font-size: 17px; word-spacing: 2px">
+    Find
+    <select style="border-radius: 5px; background-color: #e2d20b; height: 30px">
+        <option>open</option>
+        <option>all</option>
+    </select>
+    markets within
+    <select style="border-radius: 5px; background-color: #e2d20b; height: 30px">
+        <option>1 mile</option>
+        <option>3 miles</option>
+        <option>5 miles</option>
+        <option>10 miles</option>
+    </select>
+    of
+    <input type="text" placeholder="post code" style="border-radius: 5px; background-color: #e2d20b;"/>
+    <button style="border-radius: 5px; height: 30px; background-color: #222; color: #e2d20b">Go!</button>
+</div>
+
+@*<div class="row">
     @foreach (var market in Model)
     {
         <div class="market">
@@ -13,4 +32,4 @@
         </div>
     }
     @{Html.RenderPartial("_NewMarket", new Market());}
-</div>
+</div>*@
