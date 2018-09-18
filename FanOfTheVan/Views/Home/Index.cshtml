@@ -4,22 +4,24 @@
     ViewData["Title"] = "Home Page";
 }
 
-
-<div style="text-align: center; margin: 50px 0px 100px 0px; font-size: 17px; word-spacing: 2px">
+<div style="margin-top: 30px">
+    <h3 style="font-weight: 600">Find street food markets near you</h3>
+</div>
+<div style="text-align: center; margin: 40px 0px 60px 0px; font-size: 17px; word-spacing: 2px">
     Find
-    <select style="border-radius: 5px; background-color: #f7ed75; height: 30px">
+    <select style="border-radius: 5px; height: 30px">
         <option>open</option>
         <option>all</option>
     </select>
     markets within
-    <select style="border-radius: 5px; background-color: #f7ed75; height: 30px">
+    <select style="border-radius: 5px; height: 30px">
         <option>1 mile</option>
         <option>3 miles</option>
         <option>5 miles</option>
         <option>10 miles</option>
     </select>
     of
-    <input type="text" placeholder="post code" style="border-radius: 5px; background-color: #f7ed75;"/>
+    <input type="text" placeholder="post code" style="border-radius: 5px; padding-left: 5px" />
     <button style="border-radius: 5px; height: 30px; background-color: #222; color: #f7ed75">Go!</button>
 </div>
 
@@ -31,96 +33,96 @@
 
 
 <script type='text/javascript'>
-        function getUserDefaultLocation() {
-            return {latitude: 49.342874, longitude: -123.223679};
-        }
+    function getUserDefaultLocation() {
+        return { latitude: 49.342874, longitude: -123.223679 };
+    }
 
-        function getmarkets() {
-            // load via server call
-            return [
-                { name: "market A", marketType: "Study", fees: 120, points: [[49.34509682333638, -123.22530978308106], [49.342971862259944, -123.23299235449219], [49.342874, -123.2244514761963]] },
-                { name: "market B", marketType: "Design", fees: 300, points: [[49.351610934711665, -123.2253526984253], [49.35021312941835, -123.21968787298584], [49.34920668501385, -123.22101824865723], [49.35085612478622, -123.2268118201294], [49.351610934711665, -123.2253526984253] ] },
-                { name: "market C", marketType: "Study", fees: 80, points: [[49.350269042392654,-123.24144595251465],[49.35068838767441,-123.23788397894288],[49.34889915622786,-123.23728316412354],[49.347948600553735,-123.24097388372803],[49.347948600553735,-123.24097388372803],[49.350269042392654,-123.24144595251465]] },
-            ];
-        }
+    function getmarkets() {
+        // load via server call
+        return [
+            { name: "Borough Market", address: "Borough, London", openingTimes: "Mondays 11am - 3pm", points: [[49.34509682333638, -123.22530978308106], [49.342971862259944, -123.23299235449219], [49.342874, -123.2244514761963]] },
+            { name: "Maltby Street Market", address: "Maltby Street, London", openingTimes: "Wednesdays 11am - 3pm", points: [[49.351610934711665, -123.2253526984253], [49.35021312941835, -123.21968787298584], [49.34920668501385, -123.22101824865723], [49.35085612478622, -123.2268118201294], [49.351610934711665, -123.2253526984253]] },
+            { name: "Fleet Place Market", address: "Fleet Place, London", openingTimes: "Fridays 11am - 3pm", points: [[49.350269042392654, -123.24144595251465], [49.35068838767441, -123.23788397894288], [49.34889915622786, -123.23728316412354], [49.347948600553735, -123.24097388372803], [49.347948600553735, -123.24097388372803], [49.350269042392654, -123.24144595251465]] },
+        ];
+    }
 
-        function initialiseMap() {
-            var startingLocation = getUserDefaultLocation();
-            return new Microsoft.Maps.Map(document.getElementById('myMap'), {
-                center: new Microsoft.Maps.Location(startingLocation.latitude, startingLocation.longitude),
-                zoom: 15
+    function initialiseMap() {
+        var startingLocation = getUserDefaultLocation();
+        return new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            center: new Microsoft.Maps.Location(startingLocation.latitude, startingLocation.longitude),
+            zoom: 15
+        });
+    }
+
+    function saveShape(boundsArray) {
+        $.post("")
+    }
+
+    function drawingEndedHandler(e) {
+        if (!e.geometry || !e.geometry.bounds || !e.geometry.bounds.length) {
+            return;
+        }
+        saveShape(e.geometry.bounds);
+    }
+
+    function plotmarkets(markets, map, polygons, marketLookup) {
+        for (var i = 0; i < markets.length; i++) {
+            var market = markets[i];
+            var polygonPoints = [];
+            for (var j = 0; j < market.points.length; j++) {
+                var latlong = market.points[j];
+                var point = new Microsoft.Maps.Location(latlong[0], latlong[1]);
+                polygonPoints.push(point);
+            }
+            var polygon = new Microsoft.Maps.Polygon(polygonPoints, null);
+            map.entities.push(polygon);
+            polygons.push(polygon);
+            marketLookup[polygon.entity.id] = market;
+        }
+    }
+
+    function attachClickHandlers(polygons) {
+        for (var i = 0; i < polygons.length; i++) {
+            Microsoft.Maps.Events.addHandler(polygons[i], 'click', function (e) {
+                showmarketDetails(e.target.entity.id, e.location);
             });
         }
+    }
 
-        function saveShape(boundsArray) {
-            $.post("")
-        }
+    function showmarketDetails(id, location) {
+        var market = marketLookup[id];
+        infobox.setOptions({
+            title: market.name,
+            description: market.marketType + " | " + "$" + market.fees + "k",
+            location: location,
+            visible: true
+        })
+    }
 
-        function drawingEndedHandler(e) {
-            if (!e.geometry || !e.geometry.bounds || !e.geometry.bounds.length) {
-                return;
-            }
-            saveShape(e.geometry.bounds);
-        }
-
-        function plotmarkets(markets, map, polygons, marketLookup) {
+    function loadMapScenario() {
+        var map = initialiseMap();
+        var markets = getmarkets();
+        var marketLookup = {};
+        var infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
+            title: 'Title',
+            description: 'Description',
+            visible: false
+        });
+        var drawingManager;
+        var drawingTools;
+        var polygons = [];
+        infobox.setMap(map);
+        plotmarkets(markets, map, polygons, marketLookup);
+        //loadDrawingTools(map);
+        var drawingMode = 0;
+        attachClickHandlers(polygons);
+        var currentlySwitching = false;
+        $(function () {
+            var $marketsDiv = $("#marketsDiv");
             for (var i = 0; i < markets.length; i++) {
-                var market = markets[i];
-                var polygonPoints = [];
-                for (var j = 0; j < market.points.length; j++) {
-                    var latlong = market.points[j];
-                    var point = new Microsoft.Maps.Location(latlong[0], latlong[1]);
-                    polygonPoints.push(point);
-                }
-                var polygon = new Microsoft.Maps.Polygon(polygonPoints, null);
-                map.entities.push(polygon);
-                polygons.push(polygon);
-                marketLookup[polygon.entity.id] = market;
+                $marketsDiv.append("<div style='margin-bottom: 10px; border-bottom: 1px solid #ccc'><h3>" + markets[i].name + "</h3><p style='margin-bottom: 3px'>" + markets[i].address + "</p><p style='margin-bottom: 10px'>" + markets[i].openingTimes + "</p></div>");
             }
-        }
-
-        function attachClickHandlers(polygons) {
-            for (var i = 0; i < polygons.length; i++) {
-                    Microsoft.Maps.Events.addHandler(polygons[i], 'click', function (e) {
-                    showmarketDetails(e.target.entity.id, e.location);
-                });
-            }
-        }
-
-        function showmarketDetails(id, location) {
-            var market = marketLookup[id];
-            infobox.setOptions({
-                title: market.name,
-                description: market.marketType + " | " + "$" + market.fees + "k",
-                location: location,
-                visible: true
-            })
-        }
-
-        function loadMapScenario() {
-            var map = initialiseMap();
-            var markets = getmarkets();
-            var marketLookup = {};
-            var infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
-                title: 'Title',
-                description: 'Description',
-                visible: false
-            });
-            var drawingManager;
-            var drawingTools;
-            var polygons = [];
-            infobox.setMap(map);
-            plotmarkets(markets, map, polygons, marketLookup);
-            //loadDrawingTools(map);
-            var drawingMode = 0;
-            attachClickHandlers(polygons);
-            var currentlySwitching = false;
-            $(function () {
-                var $marketsDiv = $("#marketsDiv");
-                for (var i = 0; i < markets.length; i++) {
-                    $marketsDiv.append("<div style='margin-bottom: 10px; border-bottom: 1px solid #ccc'><h3>" + markets[i].name + "</h3><p>market type: " + markets[i].marketType + "</p><p>Fee: $" + markets[i].fees + "k</p></div>");
-                }
-            })
-        }
+        })
+    }
 </script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AhBX1hdku8N4JQgp-V_aA5mMDhwK9Ve4RMN0dKU1_ubY9KkKvlZpSnO8ofe3dS_X&callback=loadMapScenario' async defer></script>
