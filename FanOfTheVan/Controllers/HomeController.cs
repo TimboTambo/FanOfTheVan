@@ -56,6 +56,13 @@ namespace FanOfTheVan.Controllers
             return View(market);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            var markets = await _marketService.GetAllMarkets();
+            return View(markets);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Edit(Market market)
         {

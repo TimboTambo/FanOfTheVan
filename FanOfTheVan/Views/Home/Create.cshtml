@@ -1,0 +1,13 @@
+﻿@using FanOfTheVan.Services.Models
+@model IEnumerable<IMarket>
+@{
+    ViewData["Title"] = "Create market";
+}
+
+@foreach (var market in Model)
+{
+    <div>@market.Name</div>
+}
+<div class="row">
+    @{Html.RenderPartial("_NewMarket", new Market());}
+</div>
