@@ -69,5 +69,11 @@ namespace FanOfTheVan.Controllers
             await _marketService.UpdateMarket(market);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> GetMarketsNearLocation(float lat, float longi, int distance)
+        {
+            return RedirectToAction("Index");
+        }
     }
 }

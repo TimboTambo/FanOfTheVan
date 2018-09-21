@@ -13,11 +13,11 @@
         <option>all</option>
     </select>
     markets within
-    <select style="border-radius: 5px; height: 30px">
-        <option>1 mile</option>
-        <option>3 miles</option>
-        <option>5 miles</option>
-        <option>10 miles</option>
+    <select id="distanceSelect" style="border-radius: 5px; height: 30px">
+        <option value="1">1 mile</option>
+        <option value="3">3 miles</option>
+        <option value="5">5 miles</option>
+        <option value="10">10 miles</option>
     </select>
     of
     <input id="searchText" type="text" placeholder="post code" style="border-radius: 5px; padding-left: 5px" />
@@ -98,6 +98,29 @@
         })
     }
 
+    function cleanPostcodeInput(postcode) {
+        return postcode.replace(" ", "");
+    }
+
+    function getLatLongUrl(postcode) {
+        return "https://dev.virtualearth.net/REST/v1/Locations?countryRegion=UK&postalCode=" + postcode + "&key=AhBX1hdku8N4JQgp-V_aA5mMDhwK9Ve4RMN0dKU1_ubY9KkKvlZpSnO8ofe3dS_X";
+    }
+
+    function getLatLong(postcode) {
+        var url = getLatLongUrl(searchText);
+        return $.get(url)
+    }
+
+    function getSearchTerm() {
+        var searchTerm = $("#searchText").val();
+        return cleanPostcodeInput(searchTerm);
+    }
+
+    function getSelectedDistance() {
+        var distance = $("#distanceSelect").val();
+        return parseInt(distance);
+    }
+
     function loadMapScenario() {
         var map = initialiseMap();
         var markets = getmarkets();
@@ -129,12 +152,19 @@
             }
 
             $("#searchBtn").click(function() {
-                var searchText = $("#searchText").val();
-                if (!searchText) {
+                var searchTerm = getSearchTerm();
+                if (!searchTerm) {
                     return;
                 }
-                var url =
-                    "http://dev.virtualearth.net/REST/v1/Locations?countryRegion=UK&postalCode=N42HJ&key=AhBX1hdku8N4JQgp-V_aA5mMDhwK9Ve4RMN0dKU1_ubY9KkKvlZpSnO8ofe3dS_X";
+                
+                getLatLong(searchTerm).done(function (data) {
+                    if (!data.resourceSets || !data.resourceSets.length || !data.resourceSets[0].resources.length || !data.resourceSets[0].resources[0].geocodePoints.length) {
+                        return;
+                    }
+                    var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates
+                    var distance = getSelectedDistance();
+                    $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance });
+                });
             });
         });
     }
