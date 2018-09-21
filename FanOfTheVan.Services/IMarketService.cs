@@ -10,5 +10,6 @@ namespace FanOfTheVan.Services
         Task CreateMarket(Market market);
         Task<IEnumerable<IMarket>> GetAllMarkets();
         Task UpdateMarket(Market market);
+        Task<IEnumerable<IMarket>> GetMarketsWithinDistance(double latitude, double longitude, int distance);
     }
 }

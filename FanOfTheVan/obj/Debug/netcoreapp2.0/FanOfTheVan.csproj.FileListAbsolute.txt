@@ -30,9 +30,9 @@ C:\Code\Other\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.Servic
 C:\Code\Other\FanOfTheVan\FanOfTheVan\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.pdb
 C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.csprojAssemblyReference.cache
 C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.csproj.CoreCompileInputs.cache
-C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
 C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.AssemblyInfoInputs.cache
 C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.AssemblyInfo.cs
 C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.csproj.CopyComplete
 C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.dll
 C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\FanOfTheVan.pdb
+C:\Code\Other\FanOfTheVan\FanOfTheVan\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
