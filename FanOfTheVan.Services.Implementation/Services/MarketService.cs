@@ -65,7 +65,7 @@ namespace FanOfTheVan.Services.Implementation.Services
 
         private double ToRadians(double degrees)
         {
-            return degrees * 2f * (float)Math.PI / 180f;
+            return degrees * (float)Math.PI / 180f;
         }
     }
 }
