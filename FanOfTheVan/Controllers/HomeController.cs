@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using FanOfTheVan.Models;
 using FanOfTheVan.Services;
 using FanOfTheVan.Services.Models;
-using MongoDB.Bson.IO;
-using Newtonsoft.Json;
 using JsonConvert = Newtonsoft.Json.JsonConvert;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FanOfTheVan.Controllers
 {
@@ -74,9 +74,10 @@ namespace FanOfTheVan.Controllers
         }
 
         [HttpPost]
-        public async Task<string> GetMarketsNearLocation(double lat, double longi, int distance)
+
+        public async Task<string> GetMarketsNearLocation(double lat, double longi, int distance, OpenStatus openStatus)
         {
-            var nearbyMarkets = await _marketService.GetMarketsWithinDistance(lat, longi, distance);
+            var nearbyMarkets = await _marketService.GetMarketsWithinDistance(lat, longi, distance, openStatus);
             return JsonConvert.SerializeObject(nearbyMarkets);
         }
     }

@@ -7,12 +7,7 @@
     <h3 style="font-weight: 600">Find street food markets near you</h3>
 </div>
 <div style="text-align: center; margin: 40px 0px 60px 0px; font-size: 17px; word-spacing: 2px">
-    Find
-    <select style="border-radius: 5px; height: 30px">
-        <option>open</option>
-        <option>all</option>
-    </select>
-    markets within
+    Find markets within
     <select id="distanceSelect" style="border-radius: 5px; height: 30px">
         <option value="1">1 km</option>
         <option value="3">3 km</option>
@@ -21,6 +16,13 @@
     </select>
     of
     <input id="searchText" type="text" placeholder="post code" style="border-radius: 5px; padding-left: 5px" />
+    that are 
+    <select id="openStatusSelect" style="border-radius: 5px; height: 30px">
+        <option value="0">open now</option>
+        <option value="1">open today</option>
+        <option value="2">open tomorrow</option>
+        <option value="3">open or closed</option>
+    </select>
     <button id="searchBtn" style="border-radius: 5px; height: 30px; background-color: #222; color: #efefef">Go!</button>
 </div>
 
@@ -121,6 +123,11 @@
         return parseInt(distance);
     }
 
+    function getOpenStatus() {
+        var openStatus = $("#openStatusSelect").val();
+        return parseInt(openStatus);
+    }
+
     function moveMapCentre(latitude, longitude, map) {
         map.setView({
             mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
@@ -174,10 +181,10 @@
                     }
                     var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates;
                     var distance = getSelectedDistance();
-
+                    var openStatus = getOpenStatus();
                     moveMapCentre(latlong[0], latlong[1], map);
 
-                    $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance }).done(function(data) {
+                    $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(data) {
                          console.log(data);
                     });
                 });

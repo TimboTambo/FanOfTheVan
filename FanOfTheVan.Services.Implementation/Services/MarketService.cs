@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FanOfTheVan.Services.Implementation.Repositories;
 using FanOfTheVan.Services.Models;
@@ -35,19 +36,69 @@ namespace FanOfTheVan.Services.Implementation.Services
             await _repository.UpdateMarket(market);
         }
 
-        public async Task<IEnumerable<IMarket>> GetMarketsWithinDistance(double latitude, double longitude, int distance)
+        public async Task<IEnumerable<IMarket>> GetMarketsWithinDistance(double latitude, double longitude, int distance, OpenStatus openStatus)
         {
             var markets = await GetAllMarkets();
             var marketsWithinDistance = new List<IMarket>();
             foreach (var market in markets)
             {
                 var distanceToMarket = GetDistanceBetweenPoints(latitude, longitude, market.Latitude, market.Longitude);
-                if (distanceToMarket < distance)
+                if (distanceToMarket > distance)
                 {
-                    marketsWithinDistance.Add(market);
+                    continue;
+                }
+                var marketMatchesRequestedOpenStatus = DoesMarketMatchRequestedOpenStatus(market, openStatus);
+                if (!marketMatchesRequestedOpenStatus)
+                {
+                    continue;
+                }
+                market.Distance = distanceToMarket;
+                marketsWithinDistance.Add(market);
+            }
+            return SortSearchResults(marketsWithinDistance);
+        }
+
+        private IEnumerable<IMarket> SortSearchResults(IEnumerable<IMarket> searchResults)
+        {
+            return searchResults.OrderBy(x => x.Distance);
+        }
+
+        private bool DoesMarketMatchRequestedOpenStatus(IMarket market, OpenStatus openStatus)
+        {
+            if (openStatus == OpenStatus.OpenOrClosed)
+            {
+                return true;
+            }
+
+            var dayOfWeekInQuestion = DateTime.Now.DayOfWeek;
+            var dateInQuestion = DateTime.Now.Day;
+
+            if (openStatus == OpenStatus.OpenTomorrow)
+            {
+                dayOfWeekInQuestion++;
+                dateInQuestion++;
+            }
+
+            var isMarketEverOpenOnDayOfWeek = market.OpeningTimes.TryGetValue(dayOfWeekInQuestion, out var openingTimes);
+            if (!isMarketEverOpenOnDayOfWeek) {
+                return false;
+            }
+
+            if (openingTimes.RepeatRule.RepeatType == RepeatType.Monthly)
+            {
+                var currentWeekOfMonth = ((dateInQuestion) / 7) + 1; 
+                if (currentWeekOfMonth != openingTimes.RepeatRule.WeekOfMonth)
+                {
+                    return false;
                 }
             }
-            return marketsWithinDistance;
+
+            if (openStatus == OpenStatus.OpenToday || openStatus == OpenStatus.OpenTomorrow)
+            {
+                return openingTimes.OpenTime < openingTimes.CloseTime;
+            }
+
+            return openingTimes.OpenTime.Hours > DateTime.Now.Hour && openingTimes.CloseTime.Hours < DateTime.Now.Hour;
         }
 
         private double GetDistanceBetweenPoints(double latitude1, double longitude1, double latitude2, double longitude2)

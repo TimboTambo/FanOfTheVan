@@ -14,7 +14,6 @@ namespace FanOfTheVan.Services.Models
     public enum RepeatType
     {
         Weekly = 0,
-        Monthly = 1,
-        Annually = 2
+        Monthly = 1
     }
 }

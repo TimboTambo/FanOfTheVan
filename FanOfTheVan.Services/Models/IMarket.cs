@@ -13,13 +13,8 @@ namespace FanOfTheVan.Services.Models
         double Longitude { get; set; }
         string Description { get; set; }
         Guid ContactUserId { get; set; }
-        MarketOpenRule MondayOpen { get; set; }
-        MarketOpenRule TuesdayOpen { get; set; }
-        MarketOpenRule WednesdayOpen { get; set; }
-        MarketOpenRule ThursdayOpen { get; set; }
-        MarketOpenRule FridayOpen { get; set; }
-        MarketOpenRule SaturdayOpen { get; set; }
-        MarketOpenRule SundayOpen { get; set; }
+        Dictionary<DayOfWeek, MarketOpenRule> OpeningTimes { get; set; }
         List<MarketTag> Tags { get; set; }
+        double Distance { get; set; }
     }
 }
