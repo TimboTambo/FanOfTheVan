@@ -16,5 +16,6 @@ namespace FanOfTheVan.Services.Models
         Dictionary<DayOfWeek, MarketOpenRule> OpeningTimes { get; set; }
         List<MarketTag> Tags { get; set; }
         double Distance { get; set; }
+        string Url { get; set; }
     }
 }

@@ -4,10 +4,12 @@
     ViewData["Title"] = "Create market";
 }
 
-@foreach (var market in Model)
-{
-    <div>@market.Name</div>
-}
+<div style="margin-top: 20px">
+    @foreach (var market in Model.OrderBy(x => x.Name))
+    {
+        <div>@market.Name - <a href="@Url.Action("Edit", "Home", new { marketId = market.MarketId})">edit</a></div>
+    }
+</div>
 <div class="row">
     @{Html.RenderPartial("_NewMarket", new Market());}
 </div>

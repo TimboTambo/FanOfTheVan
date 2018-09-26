@@ -1,0 +1,71 @@
+"Maltby Street"
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Maltby Street"
+"SE1 3PA"
+"London"
+No field
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Fleet Place"
+"EC4M 7RD"
+"London"
+No field
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Leather Lane"
+"EC1N 7TX"
+"London"
+No field
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Camden Lock Place, Camden Town"
+"NW1 8AF"
+"London"
+No field
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"180-188 Camden High St, Camden Town"
+"NW1 8QP"
+"London"
+No field
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Granary Square, Kings Cross"
+"N1C 4AA"
+"London "
+No field
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Devonshire Square"
+"EC2M 4YF"
+"London"
+No field
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Blenheim Grove, Peckham Rye"
+"SE15 4QS"
+"London"
+No field
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Hornsey Town Hall Arts Centre, Crouch End"
+"N8 9JJ"
+"London"
+"https://www.kerbfood.com/markets/kerb-x-hornsey/"
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Rathbone Square, Fitzrovia"
+"W1T 1PB"
+"London"
+"https://www.kerbfood.com/markets/rathbone-sq/"
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"St Katharine Docks"
+"E1W 1LA"
+"London"
+"https://www.kerbfood.com/markets/st-kats/"
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"Sheldon Square, Paddington Central"
+"W2 6PY"
+"London"
+"https://www.kerbfood.com/markets/paddington/"
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"30 St Mary Axe"
+"EC3A 8EP"
+"London"
+"https://www.kerbfood.com/markets/gherkin/"
+Binary('AAAAAAAAAAAAAAAAAAAAAA==')
+"West India Quay"
+"E14 4AZ"
+"London"
+"https://www.kerb

@@ -36,5 +36,6 @@ namespace FanOfTheVan.Services.Models
         public string City { get; set; }
         [BsonIgnore]
         public double Distance { get; set; }
+        public string Url { get; set; }
     }
 }

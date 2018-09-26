@@ -49,7 +49,7 @@ namespace FanOfTheVan.Controllers
         public async Task<IActionResult> Create(Market newMarket)
         {
             await _marketService.CreateMarket(newMarket);
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         [HttpGet]
@@ -70,7 +70,7 @@ namespace FanOfTheVan.Controllers
         public async Task<IActionResult> Edit(Market market)
         {
             await _marketService.UpdateMarket(market);
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         [HttpPost]

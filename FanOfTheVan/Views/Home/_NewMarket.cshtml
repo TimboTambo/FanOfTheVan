@@ -9,67 +9,59 @@
         Description: @Html.EditorFor(x => x.Description)
     </div>
     <div class="mb20">
-        Latitude: @Html.EditorFor(x => x.Latitude)
-    </div>
-    <div class="mb20">
-        Longitude: @Html.EditorFor(x => x.Longitude)
+        Url: @Html.EditorFor(x => x.Url)
     </div>
     <div class="mb20">
         <div class="mb10">Street address: @Html.EditorFor(x => x.StreetAddress)</div>
         <div class="mb10">City: @Html.EditorFor(x => x.City)</div>
         <div class="mb10">Postcode: @Html.EditorFor(x => x.Postcode)</div>
+        <div style="margin-bottom: 10px">
+            Paste lat long <input type="text" id="pasteLatLong" />
+        </div>
+        <div class="mb20">
+            Latitude: @Html.EditorFor(x => x.Latitude)
+        </div>
+        <div class="mb20">
+            Longitude: @Html.EditorFor(x => x.Longitude)
+        </div>
     </div>
     <div class="mb20">
         Hours
-        <div class="mb20">
-            Monday: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Monday].OpenTime) to @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Monday].CloseTime)
-            <div class="mt10 mb10">
-                Repeat type: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Monday].RepeatRule.RepeatType)
-                Repeat week of month: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Monday].RepeatRule.WeekOfMonth)
+        @foreach (var day in new DayOfWeek[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday })
+        {
+            <div class="mb20 day">
+                @day.ToString(): @Html.EditorFor(x => x.OpeningTimes[day].OpenTime) to @Html.EditorFor(x => x.OpeningTimes[day].CloseTime)
+                <button type="button" class="copyNext">Copy</button>
+                <div class="mt10 mb10">
+                    Repeat type: @Html.EditorFor(x => x.OpeningTimes[day].RepeatRule.RepeatType)
+                    Repeat week of month: @Html.EditorFor(x => x.OpeningTimes[day].RepeatRule.WeekOfMonth)
+                </div>
             </div>
-        </div>
-        <div class="mb20">
-            Tuesday: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Tuesday].OpenTime) to @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Tuesday].CloseTime)
-            <div class="mt10 mb10">
-                Repeat type: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Tuesday].RepeatRule.RepeatType)
-                Repeat week of month: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Tuesday].RepeatRule.WeekOfMonth)
-            </div>
-        </div>
-        <div class="mb20">
-            Wednesday: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Wednesday].OpenTime) to @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Wednesday].CloseTime)
-            <div class="mt10 mb10">
-                Repeat type: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Wednesday].RepeatRule.RepeatType)
-                Repeat week of month: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Wednesday].RepeatRule.WeekOfMonth)
-            </div>
-        </div>
-        <div class="mb20">
-            Thursday: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Thursday].OpenTime) to @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Thursday].CloseTime)
-            <div class="mt10 mb10">
-                Repeat type: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Thursday].RepeatRule.RepeatType)
-                Repeat week of month: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Thursday].RepeatRule.WeekOfMonth)
-            </div>
-        </div>
-        <div class="mb20">
-            Friday: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Friday].OpenTime) to @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Friday].CloseTime)
-            <div class="mt10 mb10">
-                Repeat type: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Friday].RepeatRule.RepeatType)
-                Repeat week of month: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Friday].RepeatRule.WeekOfMonth)
-            </div>
-        </div>
-        <div class="mb20">
-            Saturday: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Saturday].OpenTime) to @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Saturday].CloseTime)
-            <div class="mt10 mb10">
-                Repeat type: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Saturday].RepeatRule.RepeatType)
-                Repeat week of month: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Saturday].RepeatRule.WeekOfMonth)
-            </div>
-        </div>
-        <div class="mb20">
-            Sunday: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Sunday].OpenTime) to @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Sunday].CloseTime)
-            <div class="mt10 mb10">
-                Repeat type: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Sunday].RepeatRule.RepeatType)
-                Repeat week of month: @Html.EditorFor(x => x.OpeningTimes[DayOfWeek.Sunday].RepeatRule.WeekOfMonth)
-            </div>
-        </div>
+        }
     </div>
     <button type="submit">Submit</button>
 }
+
+<script type="text/javascript">
+    $(function () {
+        $(".copyNext").click(function () {
+            var $parent = $(this).closest(".day");
+            var from = $parent.children()[0].value;
+            var to = $parent.children()[1].value;
+            var $next = $parent.next();
+            $next.children()[0].value = from;
+            $next.children()[1].value = to;
+        })
+
+        $("#pasteLatLong").on("paste", function () {
+            setTimeout(100, function () {
+                var val = $(this).val();
+                if (val.indexOf(",") > -1) {
+                    var split = val.split(",");
+                    $("#Latitude").val(split[0].trim());
+                    $("#Longitude").val(split[1].trim());
+                }
+            });
+        })
+    })
+</script>
