@@ -35,16 +35,7 @@
 
 <script type='text/javascript'>
     function getUserDefaultLocation() {
-        return { latitude: 49.342874, longitude: -123.223679 };
-    }
-
-    function getmarkets() {
-        // load via server call
-        return [
-            { name: "Borough Market", address: "Borough, London", openingTimes: "Mondays 11am - 3pm", points: [[49.34509682333638, -123.22530978308106], [49.342971862259944, -123.23299235449219], [49.342874, -123.2244514761963]] },
-            { name: "Maltby Street Market", address: "Maltby Street, London", openingTimes: "Wednesdays 11am - 3pm", points: [[49.351610934711665, -123.2253526984253], [49.35021312941835, -123.21968787298584], [49.34920668501385, -123.22101824865723], [49.35085612478622, -123.2268118201294], [49.351610934711665, -123.2253526984253]] },
-            { name: "Fleet Place Market", address: "Fleet Place, London", openingTimes: "Fridays 11am - 3pm", points: [[49.350269042392654, -123.24144595251465], [49.35068838767441, -123.23788397894288], [49.34889915622786, -123.23728316412354], [49.347948600553735, -123.24097388372803], [49.347948600553735, -123.24097388372803], [49.350269042392654, -123.24144595251465]] },
-        ];
+        return { latitude: 51.514007, longitude: -0.098647 };
     }
 
     function initialiseMap() {
@@ -55,50 +46,23 @@
         });
     }
 
-    function saveShape(boundsArray) {
-        $.post("")
-    }
+    //function attachClickHandlers(polygons) {
+    //    for (var i = 0; i < polygons.length; i++) {
+    //        Microsoft.Maps.Events.addHandler(polygons[i], 'click', function (e) {
+    //            showmarketDetails(e.target.entity.id, e.location);
+    //        });
+    //    }
+    //}
 
-    function drawingEndedHandler(e) {
-        if (!e.geometry || !e.geometry.bounds || !e.geometry.bounds.length) {
-            return;
-        }
-        saveShape(e.geometry.bounds);
-    }
-
-    function plotmarkets(markets, map, polygons, marketLookup) {
-        for (var i = 0; i < markets.length; i++) {
-            var market = markets[i];
-            var polygonPoints = [];
-            for (var j = 0; j < market.points.length; j++) {
-                var latlong = market.points[j];
-                var point = new Microsoft.Maps.Location(latlong[0], latlong[1]);
-                polygonPoints.push(point);
-            }
-            var polygon = new Microsoft.Maps.Polygon(polygonPoints, null);
-            map.entities.push(polygon);
-            polygons.push(polygon);
-            marketLookup[polygon.entity.id] = market;
-        }
-    }
-
-    function attachClickHandlers(polygons) {
-        for (var i = 0; i < polygons.length; i++) {
-            Microsoft.Maps.Events.addHandler(polygons[i], 'click', function (e) {
-                showmarketDetails(e.target.entity.id, e.location);
-            });
-        }
-    }
-
-    function showmarketDetails(id, location) {
-        var market = marketLookup[id];
-        infobox.setOptions({
-            title: market.name,
-            description: market.marketType + " | " + "$" + market.fees + "k",
-            location: location,
-            visible: true
-        })
-    }
+    //function showmarketDetails(id, location) {
+    //    var market = marketLookup[id];
+    //    infobox.setOptions({
+    //        title: market.name,
+    //        description: market.marketType + " | " + "$" + market.fees + "k",
+    //        location: location,
+    //        visible: true
+    //    });
+    //}
 
     function cleanPostcodeInput(postcode) {
         return postcode.replace(" ", "");
@@ -128,36 +92,54 @@
         return parseInt(openStatus);
     }
 
-    function moveMapCentre(latitude, longitude, map) {
+    function moveMapCentre(latitude, longitude, map, distance) {
+        var zoomLevel = 15;
+        if (distance > 5) {
+            zoomLevel = 12;
+        }
+        else if (distance > 3) {
+            zoomLevel = 13;
+        }
+        else if (distance > 1) {
+            zoomLevel = 14;
+        }
         map.setView({
             mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
             center: new Microsoft.Maps.Location(latitude, longitude),
-            zoom: 15
+            zoom: zoomLevel
         });
     }
 
-    function populateMapDetails(marketsHtml, $marketsDiv) {
+    function populateMarketDetails(marketsHtml, $marketsDiv) {
         $marketsDiv.html(marketsHtml);
+    }
+
+    function drawMarketsOnMap(map) {
+        var $markets = $(".market");
+        var pinLayer = new Microsoft.Maps.EntityCollection();
+        for (var i = 0; i < $markets.length; i++) {
+            var lat = $markets[i].getAttribute("data-lat");
+            var long = $markets[i].getAttribute("data-long");
+            var point = new Microsoft.Maps.Location(lat, long);
+            var pin = new Microsoft.Maps.Pushpin(point);
+            pin.Title = "Market";
+            pin.Description = "A great market";
+            pinLayer.push(pin); 
+            //Microsoft.Maps.Events.addHandler(pin, 'click', displayInfobox);
+        }
+        map.entities.push(pinLayer);
     }
  
     function loadMapScenario() {
         var map = initialiseMap();
-        var markets = getmarkets();
-        var marketLookup = {};
         var infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
             title: 'Title',
             description: 'Description',
             visible: false
         });
-        var drawingManager;
-        var drawingTools;
-        var polygons = [];
+        
         infobox.setMap(map);
-        plotmarkets(markets, map, polygons, marketLookup);
-        //loadDrawingTools(map);
-        var drawingMode = 0;
-        attachClickHandlers(polygons);
-        var currentlySwitching = false;
+        
         $(function() {
             var $marketsDiv = $("#marketsDiv");
             
@@ -174,11 +156,11 @@
                     var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates;
                     var distance = getSelectedDistance();
                     var openStatus = getOpenStatus();
-                    moveMapCentre(latlong[0], latlong[1], map);
+                    moveMapCentre(latlong[0], latlong[1], map, distance);
 
                     $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(html) {
-                        console.log(html);
-                        populateMapDetails(html, $marketsDiv);
+                        populateMarketDetails(html, $marketsDiv);
+                        drawMarketsOnMap(map);
                     });
                 });
             });

@@ -3,7 +3,7 @@
 <div>
     @foreach (var market in Model)
     {
-        <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc">
+        <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc" class="market" data-lat="@market.Latitude" data-long="@market.Longitude">
             <h3>@market.Name</h3>
             <p style="margin-bottom: 3px">
                 @market.City, @market.Postcode
