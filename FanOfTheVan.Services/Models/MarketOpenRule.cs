@@ -7,5 +7,9 @@ namespace FanOfTheVan.Services.Models
         public TimeSpan OpenTime { get; set; }
         public TimeSpan CloseTime { get; set; }
         public RepeatRule RepeatRule { get; set; }
+        public bool IsOpen()
+        {
+            return OpenTime < CloseTime;
+        }
     }
 }

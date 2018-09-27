@@ -75,10 +75,14 @@ namespace FanOfTheVan.Controllers
 
         [HttpPost]
 
-        public async Task<string> GetMarketsNearLocation(double lat, double longi, int distance, OpenStatus openStatus)
+        public async Task<PartialViewResult> GetMarketsNearLocation(double lat, double longi, int distance, OpenStatus openStatus)
         {
-            var nearbyMarkets = await _marketService.GetMarketsWithinDistance(lat, longi, distance, openStatus);
-            return JsonConvert.SerializeObject(nearbyMarkets);
+            var nearbyMarkets = (await _marketService.GetMarketsWithinDistance(lat, longi, distance, openStatus)).ToList();
+            if (nearbyMarkets.Count == 0)
+            {
+                return PartialView("_MarketNoResults");
+            }
+            return PartialView("_MarketResults", nearbyMarkets);
         }
     }
 }

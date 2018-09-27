@@ -136,16 +136,8 @@
         });
     }
 
-    function populateMapDetails(markets, $marketsDiv) {
-        for (var i = 0; i < markets.length; i++) {
-            $marketsDiv.html("<div style='margin-bottom: 10px; border-bottom: 1px solid #ccc'><h3>" +
-                markets[i].name +
-                "</h3><p style='margin-bottom: 3px'>" +
-                markets[i].address +
-                "</p><p style='margin-bottom: 10px'>" +
-                markets[i].openingTimes +
-                "</p></div>");
-        }
+    function populateMapDetails(marketsHtml, $marketsDiv) {
+        $marketsDiv.html(marketsHtml);
     }
  
     function loadMapScenario() {
@@ -184,8 +176,9 @@
                     var openStatus = getOpenStatus();
                     moveMapCentre(latlong[0], latlong[1], map);
 
-                    $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(data) {
-                         console.log(data);
+                    $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(html) {
+                        console.log(html);
+                        populateMapDetails(html, $marketsDiv);
                     });
                 });
             });

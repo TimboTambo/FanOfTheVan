@@ -98,7 +98,7 @@ namespace FanOfTheVan.Services.Implementation.Services
                 return openingTimes.OpenTime < openingTimes.CloseTime;
             }
 
-            return openingTimes.OpenTime.Hours > DateTime.Now.Hour && openingTimes.CloseTime.Hours < DateTime.Now.Hour;
+            return openingTimes.OpenTime.Hours < DateTime.Now.Hour && openingTimes.CloseTime.Hours > DateTime.Now.Hour;
         }
 
         private double GetDistanceBetweenPoints(double latitude1, double longitude1, double latitude2, double longitude2)

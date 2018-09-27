@@ -1,0 +1,94 @@
+﻿@model List<FanOfTheVan.Services.Models.IMarket>
+
+<div>
+    @foreach (var market in Model)
+    {
+        <div style="margin-bottom: 10px; border-bottom: 1px solid #ccc">
+            <h3>@market.Name</h3>
+            <p style="margin-bottom: 3px">
+                @market.City, @market.Postcode
+            </p>
+            <div>
+                <h4>Hours</h4>
+                <div>
+                    Monday:
+                    @if (market.OpeningTimes[DayOfWeek.Monday].IsOpen())
+                    {
+                        <span>@market.OpeningTimes[DayOfWeek.Monday].OpenTime - @market.OpeningTimes[DayOfWeek.Monday].CloseTime</span>
+                    }
+                    else
+                    {
+                        <span>Closed</span>
+                    }
+                </div>
+                <div>
+                    Tuesday:
+                    @if (market.OpeningTimes[DayOfWeek.Tuesday].IsOpen())
+                    {
+                    <span>@market.OpeningTimes[DayOfWeek.Tuesday].OpenTime - @market.OpeningTimes[DayOfWeek.Tuesday].CloseTime</span>
+                    }
+                    else
+                    {
+                        <span>Closed</span>
+                    }
+                </div>
+                <div>
+                    Wednesday:
+                    @if (market.OpeningTimes[DayOfWeek.Wednesday].IsOpen())
+                    {
+                    <span>@market.OpeningTimes[DayOfWeek.Wednesday].OpenTime - @market.OpeningTimes[DayOfWeek.Wednesday].CloseTime</span>
+                    }
+                    else
+                    {
+                        <span>Closed</span>
+                    }
+                </div>
+                <div>
+                    Thursday:
+                    @if (market.OpeningTimes[DayOfWeek.Thursday].IsOpen())
+                    {
+                    <span>@market.OpeningTimes[DayOfWeek.Thursday].OpenTime - @market.OpeningTimes[DayOfWeek.Thursday].CloseTime</span>
+                    }
+                    else
+                    {
+                        <span>Closed</span>
+                    }
+                </div>
+                <div>
+                    Friday:
+                    @if (market.OpeningTimes[DayOfWeek.Friday].IsOpen())
+                    {
+                    <span>@market.OpeningTimes[DayOfWeek.Friday].OpenTime - @market.OpeningTimes[DayOfWeek.Friday].CloseTime</span>
+                    }
+                    else
+                    {
+                        <span>Closed</span>
+                    }
+                </div>
+                <div>
+                    Saturday:
+                    @if (market.OpeningTimes[DayOfWeek.Saturday].IsOpen())
+                    {
+                    <span>@market.OpeningTimes[DayOfWeek.Saturday].OpenTime - @market.OpeningTimes[DayOfWeek.Saturday].CloseTime</span>
+                    }
+                    else
+                    {
+                        <span>Closed</span>
+                    }
+                </div>
+                <div>
+                    Sunday:
+                    @if (market.OpeningTimes[DayOfWeek.Sunday].IsOpen())
+                    {
+                    <span>@market.OpeningTimes[DayOfWeek.Sunday].OpenTime - @market.OpeningTimes[DayOfWeek.Sunday].CloseTime</span>
+                    }
+                    else
+                    {
+                        <span>Closed</span>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
