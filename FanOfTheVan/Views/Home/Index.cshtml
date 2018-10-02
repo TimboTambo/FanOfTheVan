@@ -10,7 +10,7 @@
     Find markets within
     <select id="distanceSelect" style="border-radius: 5px; height: 30px">
         <option value="1">1 km</option>
-        <option value="3">3 km</option>
+        <option value="3" selected="selected">3 km</option>
         <option value="5">5 km</option>
         <option value="10">10 km</option>
     </select>
@@ -19,7 +19,7 @@
     that are 
     <select id="openStatusSelect" style="border-radius: 5px; height: 30px">
         <option value="0">open now</option>
-        <option value="1">open today</option>
+        <option value="1" selected="selected">open today</option>
         <option value="2">open tomorrow</option>
         <option value="3">open or closed</option>
     </select>
@@ -27,7 +27,7 @@
 </div>
 
 
-<div class="row">
+<div class="row" id="results-div" style="visibility: hidden">
     <div id="marketsDiv" class="col-md-4 col-lg-4" style=''></div>
     <div id='myMap' class="col-md-8 col-lg-8" style='height: 600px;'></div>
 </div>
@@ -92,7 +92,7 @@
         return parseInt(openStatus);
     }
 
-    function moveMapCentre(latitude, longitude, map, distance) {
+    function moveMapCentre(latitude, longitude, map, distance, locationPin) {
         var zoomLevel = 15;
         if (distance > 5) {
             zoomLevel = 12;
@@ -108,6 +108,17 @@
             center: new Microsoft.Maps.Location(latitude, longitude),
             zoom: zoomLevel
         });
+
+        if (locationPin) {
+            map.entities.remove(locationPin);
+        }
+        var locationPoint = new Microsoft.Maps.Location(latitude, longitude);
+        locationPin = new Microsoft.Maps.Pushpin(locationPoint,
+            {
+                title: "You"
+            });
+        map.entities.push(locationPin);
+        return locationPin;
     }
 
     function populateMarketDetails(marketsHtml, $marketsDiv) {
@@ -118,10 +129,19 @@
         var $markets = $(".market");
         var pinLayer = new Microsoft.Maps.EntityCollection();
         for (var i = 0; i < $markets.length; i++) {
-            var lat = $markets[i].getAttribute("data-lat");
-            var long = $markets[i].getAttribute("data-long");
+            var market = $markets[i];
+            var lat = market.getAttribute("data-lat");
+            var long = market.getAttribute("data-long");
+            var name = market.getAttribute("data-name");
+            var colour = market.getAttribute("data-colour");
+            var pinColour = Microsoft.Maps.Color.fromHex('#' + colour);
             var point = new Microsoft.Maps.Location(lat, long);
-            var pin = new Microsoft.Maps.Pushpin(point);
+            var pin = new Microsoft.Maps.Pushpin(point,
+                {
+                    color: pinColour,
+                    title: name,
+                    enableHoverStyle: true
+                });
             pin.Title = "Market";
             pin.Description = "A great market";
             pinLayer.push(pin); 
@@ -132,23 +152,24 @@
  
     function loadMapScenario() {
         var map = initialiseMap();
+        var locationPin;
         var infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
             title: 'Title',
             description: 'Description',
             visible: false
         });
-        
         infobox.setMap(map);
-        
+
         $(function() {
             var $marketsDiv = $("#marketsDiv");
-            
+            var $resultsContainer = $("#results-div");
+
             $("#searchBtn").click(function() {
                 var searchTerm = getSearchTerm();
                 if (!searchTerm) {
                     return;
                 }
-                
+                map.entities.clear();
                 getLatLong(searchTerm).done(function (data) {
                     if (!data.resourceSets || !data.resourceSets.length || !data.resourceSets[0].resources.length || !data.resourceSets[0].resources[0].geocodePoints.length) {
                         return;
@@ -156,14 +177,33 @@
                     var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates;
                     var distance = getSelectedDistance();
                     var openStatus = getOpenStatus();
-                    moveMapCentre(latlong[0], latlong[1], map, distance);
-
+                    locationPin = moveMapCentre(latlong[0], latlong[1], map, distance, locationPin);
+                    $resultsContainer.css("visibility", "visible");
                     $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(html) {
                         populateMarketDetails(html, $marketsDiv);
                         drawMarketsOnMap(map);
                     });
                 });
             });
+
+            $marketsDiv.on("click",
+                ".hours-toggle.closed",
+                function() {
+                    var $this = $(this);
+                    $this.addClass("open").removeClass("closed");
+                    $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-top");
+                    $this.find(".hours-div").toggle();
+                });
+
+            $marketsDiv.on("click",
+                ".hours-toggle.open",
+                function () {
+                    var $this = $(this);
+                    $this.addClass("closed").removeClass("open");
+                    $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom");
+                    $this.find(".hours-div").toggle();
+                });
+
         });
     }
 </script>
