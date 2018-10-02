@@ -28,7 +28,7 @@
 
 
 <div class="row" id="results-div" style="visibility: hidden">
-    <div id="marketsDiv" class="col-md-4 col-lg-4" style=''></div>
+    <div id="marketsDiv" class="col-md-4 col-lg-4" style='height: 600px; overflow-y: scroll'></div>
     <div id='myMap' class="col-md-8 col-lg-8" style='height: 600px;'></div>
 </div>
 
@@ -46,13 +46,13 @@
         });
     }
 
-    //function attachClickHandlers(polygons) {
-    //    for (var i = 0; i < polygons.length; i++) {
-    //        Microsoft.Maps.Events.addHandler(polygons[i], 'click', function (e) {
-    //            showmarketDetails(e.target.entity.id, e.location);
-    //        });
-    //    }
-    //}
+    function attachClickHandlers(polygons) {
+        for (var i = 0; i < polygons.length; i++) {
+            Microsoft.Maps.Events.addHandler(polygons[i], 'click', function (e) {
+                showmarketDetails(e.target.entity.id, e.location);
+            });
+        }
+    }
 
     //function showmarketDetails(id, location) {
     //    var market = marketLookup[id];
@@ -130,11 +130,12 @@
         var pinLayer = new Microsoft.Maps.EntityCollection();
         for (var i = 0; i < $markets.length; i++) {
             var market = $markets[i];
+            var id = market.getAttribute("data-id");
             var lat = market.getAttribute("data-lat");
             var long = market.getAttribute("data-long");
             var name = market.getAttribute("data-name");
             var colour = market.getAttribute("data-colour");
-            var pinColour = Microsoft.Maps.Color.fromHex('#' + colour);
+            var pinColour = Microsoft.Maps.Color.fromHex(colour);
             var point = new Microsoft.Maps.Location(lat, long);
             var pin = new Microsoft.Maps.Pushpin(point,
                 {
@@ -144,8 +145,11 @@
                 });
             pin.Title = "Market";
             pin.Description = "A great market";
+            pin.Metadata = { Id: id };
             pinLayer.push(pin); 
-            //Microsoft.Maps.Events.addHandler(pin, 'click', displayInfobox);
+            Microsoft.Maps.Events.addHandler(pin, 'click', function (e) {
+                handleMarketPointClickEvent(e, map);
+            });
         }
         map.entities.push(pinLayer);
     }

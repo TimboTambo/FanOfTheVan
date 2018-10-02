@@ -1,0 +1,14 @@
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\bin\Debug\netcoreapp2.0\FanOfTheVan.IOC.deps.json
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\bin\Debug\netcoreapp2.0\FanOfTheVan.IOC.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\bin\Debug\netcoreapp2.0\FanOfTheVan.IOC.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\obj\Debug\netcoreapp2.0\FanOfTheVan.IOC.csprojResolveAssemblyReference.cache
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\obj\Debug\netcoreapp2.0\FanOfTheVan.IOC.csproj.CoreCompileInputs.cache
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\obj\Debug\netcoreapp2.0\FanOfTheVan.IOC.AssemblyInfoInputs.cache
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\obj\Debug\netcoreapp2.0\FanOfTheVan.IOC.AssemblyInfo.cs
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\obj\Debug\netcoreapp2.0\FanOfTheVan.IOC.csproj.CopyComplete
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\obj\Debug\netcoreapp2.0\FanOfTheVan.IOC.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.IOC\obj\Debug\netcoreapp2.0\FanOfTheVan.IOC.pdb

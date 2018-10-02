@@ -55,7 +55,26 @@ namespace FanOfTheVan.Services.Implementation.Services
                 market.Distance = distanceToMarket;
                 marketsWithinDistance.Add(market);
             }
+            SetMarketColours(marketsWithinDistance);
             return SortSearchResults(marketsWithinDistance);
+        }
+
+        private void SetMarketColours(List<IMarket> marketsWithinDistance)
+        {
+            var rand = new Random();
+            foreach (var market in marketsWithinDistance)
+            {
+                int r = rand.Next(255);
+                int g = rand.Next(255);
+                int b = rand.Next(255);
+                while (r + g + b > 600)
+                {
+                    r = rand.Next(255);
+                    g = rand.Next(255);
+                    b = rand.Next(255);
+                }
+                market.Colour = $"#{r.ToString("X2")}{g.ToString("X2")}{b.ToString("X2")}";
+            }
         }
 
         private IEnumerable<IMarket> SortSearchResults(IEnumerable<IMarket> searchResults)

@@ -37,5 +37,7 @@ namespace FanOfTheVan.Services.Models
         [BsonIgnore]
         public double Distance { get; set; }
         public string Url { get; set; }
+        [BsonIgnore]
+        public string Colour { get; set; }
     }
 }

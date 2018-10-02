@@ -20,5 +20,6 @@ namespace FanOfTheVan.Services.Models
         string Postcode { get; set; }
         string City { get; set; }
         string Url { get; set; }
+        string Colour { get; set; }
     }
 }

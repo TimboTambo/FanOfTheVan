@@ -1,0 +1,12 @@
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.deps.json
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.pdb
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.csprojResolveAssemblyReference.cache
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.csproj.CoreCompileInputs.cache
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.AssemblyInfoInputs.cache
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.AssemblyInfo.cs
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.csproj.CopyComplete
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.dll
+C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services.Implementation\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.Implementation.pdb
