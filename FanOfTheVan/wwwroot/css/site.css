@@ -108,3 +108,11 @@
 .mr50 {
     margin-right: 50px;
 }
+
+.market.selected {
+    background: #eaeaea;
+}
+
+.market:hover {
+    background: #eee;
+}

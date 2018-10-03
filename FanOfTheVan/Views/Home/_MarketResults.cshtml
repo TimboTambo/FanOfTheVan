@@ -3,7 +3,7 @@
 <div>
     @foreach (var market in Model)
     {
-        <div style="margin-bottom: 12px; border-bottom: 1px solid #ccc; padding: 3px 10px 0 0" class="market" data-id="@market.MarketId" data-lat="@market.Latitude" data-long="@market.Longitude" data-name="@market.Name" data-colour="@market.Colour">
+        <div style="margin-bottom: 12px; border-bottom: 1px solid #ccc; padding: 5px 10px 0 5px; border-radius: 5px" class="market" data-id="@market.MarketId" data-lat="@market.Latitude" data-long="@market.Longitude" data-name="@market.Name" data-colour="@market.Colour">
             <p style="font-size: 24px; margin-bottom: 0px">@market.Name Market<span class="glyphicon glyphicon-map-marker" style="color: @market.Colour; float: right"></span></p>
             <p style="color: #606060; margin-bottom: 0">@(market.Distance.ToString("F1"))km from you</p>
             <p style="color: #606060; margin-bottom: 5px">

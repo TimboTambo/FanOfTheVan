@@ -59,20 +59,35 @@ namespace FanOfTheVan.Services.Implementation.Services
             return SortSearchResults(marketsWithinDistance);
         }
 
+        private bool ColourIsSimilarToOtherColours(int r, int g, int b, List<List<int>> coloursSelectedAlready)
+        {
+            for (var i = 0; i < coloursSelectedAlready.Count; i++)
+            {
+                var closeness = Math.Abs(r - coloursSelectedAlready[i][0]) + Math.Abs(r - coloursSelectedAlready[i][1]) + Math.Abs(r - coloursSelectedAlready[i][2]);
+                if (closeness < 80)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void SetMarketColours(List<IMarket> marketsWithinDistance)
         {
             var rand = new Random();
+            var coloursSelectedAlready = new List<List<int>>();
             foreach (var market in marketsWithinDistance)
             {
                 int r = rand.Next(255);
                 int g = rand.Next(255);
                 int b = rand.Next(255);
-                while (r + g + b > 600)
+                while (r + g + b > 600 && ColourIsSimilarToOtherColours(r, g, b, coloursSelectedAlready))
                 {
                     r = rand.Next(255);
                     g = rand.Next(255);
                     b = rand.Next(255);
                 }
+                coloursSelectedAlready.Add(new List<int> { r, g, b });
                 market.Colour = $"#{r.ToString("X2")}{g.ToString("X2")}{b.ToString("X2")}";
             }
         }

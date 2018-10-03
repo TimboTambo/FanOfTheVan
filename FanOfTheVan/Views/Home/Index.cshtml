@@ -54,15 +54,22 @@
         }
     }
 
-    //function showmarketDetails(id, location) {
-    //    var market = marketLookup[id];
-    //    infobox.setOptions({
-    //        title: market.name,
-    //        description: market.marketType + " | " + "$" + market.fees + "k",
-    //        location: location,
-    //        visible: true
-    //    });
-    //}
+    function handleMarketPointClickEvent(e, map) {
+        var marketId = e.target.Metadata.Id;
+        $(".market.selected").removeClass("selected");
+        var $market = $(".market[data-id=" + marketId + "]");
+        $market.addClass("selected");
+        var $marketsDiv = $("#marketsDiv");
+        $marketsDiv.animate({ scrollTop: $market.position().top });
+    }
+
+    function handleMarketClickEvent(marketPin, map) {
+        var marketId = marketPin.Metadata.Id;
+        var $market = $(".market[data-id=" + marketId + "]");
+        $market.click(function () {
+            centrePin(marketPin, map);
+        })
+    }
 
     function cleanPostcodeInput(postcode) {
         return postcode.replace(" ", "");
@@ -92,7 +99,14 @@
         return parseInt(openStatus);
     }
 
-    function moveMapCentre(latitude, longitude, map, distance, locationPin) {
+    function centrePin(locationPin, map) {
+         map.setView({
+            mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
+            center: new Microsoft.Maps.Location(parseFloat(locationPin.Metadata.Lat), parseFloat(locationPin.Metadata.Long)),
+        });
+    }
+
+    function addUserPosition(latitude, longitude, map, distance, locationPin) {
         var zoomLevel = 15;
         if (distance > 5) {
             zoomLevel = 12;
@@ -103,12 +117,13 @@
         else if (distance > 1) {
             zoomLevel = 14;
         }
+
         map.setView({
             mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
             center: new Microsoft.Maps.Location(latitude, longitude),
             zoom: zoomLevel
         });
-
+        
         if (locationPin) {
             map.entities.remove(locationPin);
         }
@@ -145,11 +160,12 @@
                 });
             pin.Title = "Market";
             pin.Description = "A great market";
-            pin.Metadata = { Id: id };
+            pin.Metadata = { Id: id, Lat: lat, Long: long };
             pinLayer.push(pin); 
             Microsoft.Maps.Events.addHandler(pin, 'click', function (e) {
                 handleMarketPointClickEvent(e, map);
             });
+            handleMarketClickEvent(pin, map);
         }
         map.entities.push(pinLayer);
     }
@@ -181,7 +197,7 @@
                     var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates;
                     var distance = getSelectedDistance();
                     var openStatus = getOpenStatus();
-                    locationPin = moveMapCentre(latlong[0], latlong[1], map, distance, locationPin);
+                    locationPin = addUserPosition(latlong[0], latlong[1], map, distance, locationPin);
                     $resultsContainer.css("visibility", "visible");
                     $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(html) {
                         populateMarketDetails(html, $marketsDiv);
