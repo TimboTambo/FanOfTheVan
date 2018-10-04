@@ -39,5 +39,9 @@ namespace FanOfTheVan.Services.Models
         public string Url { get; set; }
         [BsonIgnore]
         public string Colour { get; set; }
+        [BsonIgnore]
+        public DayOfWeek? ResultDayOfWeek { get; set; }
+        [BsonIgnore]
+        public MarketOpenRule ResultOpeningTimes { get; set; }
     }
 }

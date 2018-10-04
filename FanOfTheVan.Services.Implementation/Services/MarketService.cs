@@ -36,7 +36,7 @@ namespace FanOfTheVan.Services.Implementation.Services
             await _repository.UpdateMarket(market);
         }
 
-        public async Task<IEnumerable<IMarket>> GetMarketsWithinDistance(double latitude, double longitude, int distance, OpenStatus openStatus)
+        public async Task<IEnumerable<IMarket>> GetMatchingMarkets(double latitude, double longitude, int distance, OpenStatus openStatus)
         {
             var markets = await GetAllMarkets();
             var marketsWithinDistance = new List<IMarket>();
@@ -117,6 +117,9 @@ namespace FanOfTheVan.Services.Implementation.Services
             if (!isMarketEverOpenOnDayOfWeek) {
                 return false;
             }
+
+            market.ResultDayOfWeek = dayOfWeekInQuestion;
+            market.ResultOpeningTimes = openingTimes;
 
             if (openingTimes.RepeatRule.RepeatType == RepeatType.Monthly)
             {

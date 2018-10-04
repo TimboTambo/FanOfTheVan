@@ -7,7 +7,15 @@
     <h3 style="font-weight: 600">Find street food markets near you</h3>
 </div>
 <div style="text-align: center; margin: 40px 0px 60px 0px; font-size: 17px; word-spacing: 2px">
-    Find markets within
+    Find food markets 
+    <select id="openStatusSelect" style="border-radius: 5px; height: 30px">
+        <option value="0">open now</option>
+        <option value="1" selected="selected">open today</option>
+        <option value="2">open tomorrow</option>
+        <option value="3">open or closed</option>
+    </select>
+
+    within
     <select id="distanceSelect" style="border-radius: 5px; height: 30px">
         <option value="1">1 km</option>
         <option value="3" selected="selected">3 km</option>
@@ -16,13 +24,6 @@
     </select>
     of
     <input id="searchText" type="text" placeholder="post code" style="border-radius: 5px; padding-left: 5px" />
-    that are 
-    <select id="openStatusSelect" style="border-radius: 5px; height: 30px">
-        <option value="0">open now</option>
-        <option value="1" selected="selected">open today</option>
-        <option value="2">open tomorrow</option>
-        <option value="3">open or closed</option>
-    </select>
     <button id="searchBtn" style="border-radius: 5px; height: 30px; background-color: #222; color: #efefef">Go!</button>
 </div>
 
@@ -139,7 +140,7 @@
     function populateMarketDetails(marketsHtml, $marketsDiv) {
         $marketsDiv.html(marketsHtml);
     }
-
+    
     function drawMarketsOnMap(map) {
         var $markets = $(".market");
         var pinLayer = new Microsoft.Maps.EntityCollection();
@@ -158,8 +159,6 @@
                     title: name,
                     enableHoverStyle: true
                 });
-            pin.Title = "Market";
-            pin.Description = "A great market";
             pin.Metadata = { Id: id, Lat: lat, Long: long };
             pinLayer.push(pin); 
             Microsoft.Maps.Events.addHandler(pin, 'click', function (e) {
@@ -169,7 +168,21 @@
         }
         map.entities.push(pinLayer);
     }
- 
+
+    function toggleShowHours() {
+        var $this = $(this);
+        $this.addClass("open").removeClass("closed");
+        $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-top");
+        $this.find(".hours-div").toggle();
+    }
+
+    function toggleHideHours() {
+        var $this = $(this);
+        $this.addClass("closed").removeClass("open");
+        $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom");
+        $this.find(".hours-div").toggle();
+    }
+
     function loadMapScenario() {
         var map = initialiseMap();
         var locationPin;
@@ -184,46 +197,32 @@
             var $marketsDiv = $("#marketsDiv");
             var $resultsContainer = $("#results-div");
 
+            $marketsDiv.on("click", ".hours-toggle.closed", toggleShowHours);
+            $marketsDiv.on("click", ".hours-toggle.open", toggleHideHours);
+
             $("#searchBtn").click(function() {
                 var searchTerm = getSearchTerm();
                 if (!searchTerm) {
                     return;
                 }
                 map.entities.clear();
-                getLatLong(searchTerm).done(function (data) {
-                    if (!data.resourceSets || !data.resourceSets.length || !data.resourceSets[0].resources.length || !data.resourceSets[0].resources[0].geocodePoints.length) {
-                        return;
-                    }
-                    var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates;
-                    var distance = getSelectedDistance();
-                    var openStatus = getOpenStatus();
-                    locationPin = addUserPosition(latlong[0], latlong[1], map, distance, locationPin);
-                    $resultsContainer.css("visibility", "visible");
-                    $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(html) {
-                        populateMarketDetails(html, $marketsDiv);
-                        drawMarketsOnMap(map);
-                    });
-                });
+                getLatLong(searchTerm).done(handleSearchPositionResult);
             });
 
-            $marketsDiv.on("click",
-                ".hours-toggle.closed",
-                function() {
-                    var $this = $(this);
-                    $this.addClass("open").removeClass("closed");
-                    $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-top");
-                    $this.find(".hours-div").toggle();
+            function handleSearchPositionResult(data) {
+                if (!data.resourceSets || !data.resourceSets.length || !data.resourceSets[0].resources.length || !data.resourceSets[0].resources[0].geocodePoints.length) {
+                    return;
+                }
+                var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates;
+                var distance = getSelectedDistance();
+                var openStatus = getOpenStatus();
+                locationPin = addUserPosition(latlong[0], latlong[1], map, distance, locationPin);
+                $resultsContainer.css("visibility", "visible");
+                $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(html) {
+                    populateMarketDetails(html, $marketsDiv);
+                    drawMarketsOnMap(map);
                 });
-
-            $marketsDiv.on("click",
-                ".hours-toggle.open",
-                function () {
-                    var $this = $(this);
-                    $this.addClass("closed").removeClass("open");
-                    $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom");
-                    $this.find(".hours-div").toggle();
-                });
-
+            }
         });
     }
 </script>

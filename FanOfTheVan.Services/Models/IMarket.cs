@@ -21,5 +21,7 @@ namespace FanOfTheVan.Services.Models
         string City { get; set; }
         string Url { get; set; }
         string Colour { get; set; }
+        DayOfWeek? ResultDayOfWeek { get; set; }
+        MarketOpenRule ResultOpeningTimes { get; set; }
     }
 }

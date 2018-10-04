@@ -110,9 +110,13 @@
 }
 
 .market.selected {
-    background: #eaeaea;
+    background: #ecebff;
 }
 
 .market:hover {
-    background: #eee;
+    background: #ecebff;
+}
+
+.hours-toggle.open .filter-hours {
+    display: none;
 }

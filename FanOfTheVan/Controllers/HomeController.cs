@@ -77,7 +77,7 @@ namespace FanOfTheVan.Controllers
 
         public async Task<PartialViewResult> GetMarketsNearLocation(double lat, double longi, int distance, OpenStatus openStatus)
         {
-            var nearbyMarkets = (await _marketService.GetMarketsWithinDistance(lat, longi, distance, openStatus)).ToList();
+            var nearbyMarkets = (await _marketService.GetMatchingMarkets(lat, longi, distance, openStatus)).ToList();
             if (nearbyMarkets.Count == 0)
             {
                 return PartialView("_MarketNoResults");
