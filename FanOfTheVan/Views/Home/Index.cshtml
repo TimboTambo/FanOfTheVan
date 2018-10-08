@@ -90,14 +90,26 @@
         return cleanPostcodeInput(searchTerm);
     }
 
+    function setSearchTerm(value) {
+        $("#searchText").val(value);
+    }
+
     function getSelectedDistance() {
         var distance = $("#distanceSelect").val();
         return parseInt(distance);
     }
 
+    function setSelectedDistance(value) {
+        $("#distanceSelect").val(value);
+    }
+
     function getOpenStatus() {
         var openStatus = $("#openStatusSelect").val();
         return parseInt(openStatus);
+    }
+
+    function setOpenStatus(value) {
+        $("#openStatusSelect").val(value);
     }
 
     function centrePin(locationPin, map) {
@@ -107,11 +119,11 @@
         });
     }
 
-    function addUserPosition(latLong, map, locationPin) {        
+    function addUserPosition(lat, long, map, locationPin) {        
         if (locationPin) {
             map.entities.remove(locationPin);
         }
-        var locationPoint = new Microsoft.Maps.Location(latLong[0], latLong[1]);
+        var locationPoint = new Microsoft.Maps.Location(lat, long);
         locationPin = new Microsoft.Maps.Pushpin(locationPoint,
             {
                 title: "You"
@@ -124,10 +136,10 @@
         $marketsDiv.html(marketsHtml);
     }
     
-    function drawMarketsOnMap(map, userLocation) {
+    function drawMarketsOnMap(map, userLat, userLong) {
         var $markets = $(".market");
         var pinLayer = new Microsoft.Maps.EntityCollection();
-        var boundingBox = { minLat: userLocation[0], maxLat: userLocation[0], minLong: userLocation[1], maxLong: userLocation[1] };
+        var boundingBox = { minLat: userLat, maxLat: userLat, minLong: userLong, maxLong: userLong };
         for (var i = 0; i < $markets.length; i++) {
             var market = $markets[i];
             var id = market.getAttribute("data-id");
@@ -171,12 +183,15 @@
     }
 
     function updateMapView(map, boundingBox) {
+        var latPadding = (boundingBox.maxLat - boundingBox.minLat) / 20;
+        var longPadding = (boundingBox.maxLong - boundingBox.minLong) / 20;
+
         map.setView({
             mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
-            bounds: Microsoft.Maps.LocationRect.fromEdges(boundingBox.maxLat + 0.01,
-                boundingBox.minLong - 0.001,
-                boundingBox.minLat - 0.01,
-                boundingBox.maxLong + 0.001)
+            bounds: Microsoft.Maps.LocationRect.fromEdges(boundingBox.maxLat + latPadding,
+                boundingBox.minLong - longPadding,
+                boundingBox.minLat - latPadding,
+                boundingBox.maxLong + longPadding)
         });
     }
 
@@ -192,6 +207,33 @@
         $this.addClass("closed").removeClass("open");
         $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom");
         $this.find(".hours-div").toggle();
+    }
+
+    function saveSearchTerms(lat, long, distance, openStatus, searchTerm) {
+        document.cookie = "search=" + lat + "|" + long + "|" + distance + "|" + openStatus + "|" + searchTerm;
+    }
+
+    function getSearchTermsFromCookie() {
+        if (!document.cookie) {
+            return;
+        }
+
+        var cookies = document.cookie.split("; ");
+        var cookie;
+        for (var i = 0; i < cookies.length; i++) {
+            var nameValue = cookies[i].split("=");
+            var name = nameValue[0];
+            if (name === "search") {
+                cookie = nameValue[1];
+            }
+        }
+
+        if (!cookie) {
+            return;
+        }
+
+        var terms = cookie.split("|");
+        return { lat: terms[0], long: terms[1], distance: terms[2], openStatus: terms[3], searchTerm: terms[4] };
     }
 
     function loadMapScenario() {
@@ -220,6 +262,18 @@
                 getLatLong(searchTerm).done(handleSearchPositionResult);
             });
 
+            function populateSearchFromCookie() {
+                var searchCookie = getSearchTermsFromCookie();
+                if (!searchCookie) {
+                    return;
+                }
+
+                setSelectedDistance(searchCookie.distance);
+                setSearchTerm(searchCookie.searchTerm);
+                setOpenStatus(searchCookie.openStatus);
+                updateResults(parseFloat(searchCookie.lat), parseFloat(searchCookie.long), searchCookie.distance, searchCookie.openStatus);
+            }
+
             function handleSearchPositionResult(data) {
                 if (!data.resourceSets || !data.resourceSets.length || !data.resourceSets[0].resources.length || !data.resourceSets[0].resources[0].geocodePoints.length) {
                     return;
@@ -227,13 +281,20 @@
                 var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates;
                 var distance = getSelectedDistance();
                 var openStatus = getOpenStatus();
-                locationPin = addUserPosition(latlong, map, locationPin);
-                $resultsContainer.css("visibility", "visible");
-                $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(html) {
-                    populateMarketDetails(html, $marketsDiv);
-                    drawMarketsOnMap(map, latlong);
-                });
+                updateResults(latlong[0], latlong[1], distance, openStatus)
             }
+
+            function updateResults(lat, long, distance, openStatus) {
+                locationPin = addUserPosition(lat, long, map, locationPin);
+                $resultsContainer.css("visibility", "visible");
+                $.post("@Url.Action("GetMarketsNearLocation")", { lat: lat, longi: long, distance: distance, openStatus: openStatus }).done(function(html) {
+                    populateMarketDetails(html, $marketsDiv);
+                    drawMarketsOnMap(map, lat, long);
+                });
+                saveSearchTerms(lat, long, distance, openStatus, getSearchTerm());
+            }
+
+            populateSearchFromCookie();
         });
     }
 </script>

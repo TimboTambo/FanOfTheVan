@@ -5343,40 +5343,37 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\tim.lee.JUST-EAT\\.nuget\\packages\\": {},
+    "C:\\Users\\Tim\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Code\\Other\\FanOfTheVan\\FanOfTheVan.Services.Implementation\\FanOfTheVan.Services.Implementation.csproj",
+      "projectUniqueName": "C:\\Users\\Tim\\source\\repos\\FanOfTheVan\\FanOfTheVan.Services.Implementation\\FanOfTheVan.Services.Implementation.csproj",
       "projectName": "FanOfTheVan.Services.Implementation",
-      "projectPath": "C:\\Code\\Other\\FanOfTheVan\\FanOfTheVan.Services.Implementation\\FanOfTheVan.Services.Implementation.csproj",
-      "packagesPath": "C:\\Users\\tim.lee.JUST-EAT\\.nuget\\packages\\",
-      "outputPath": "C:\\Code\\Other\\FanOfTheVan\\FanOfTheVan.Services.Implementation\\obj\\",
+      "projectPath": "C:\\Users\\Tim\\source\\repos\\FanOfTheVan\\FanOfTheVan.Services.Implementation\\FanOfTheVan.Services.Implementation.csproj",
+      "packagesPath": "C:\\Users\\Tim\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Tim\\source\\repos\\FanOfTheVan\\FanOfTheVan.Services.Implementation\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\tim.lee.JUST-EAT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Tim\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
       ],
       "sources": {
-        "C:\\LocalNuget": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://packages.je-labs.com/nuget/Default": {},
-        "http://packages.je-labs.com/nuget/Global": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "C:\\Code\\Other\\FanOfTheVan\\FanOfTheVan.Services\\FanOfTheVan.Services.csproj": {
-              "projectPath": "C:\\Code\\Other\\FanOfTheVan\\FanOfTheVan.Services\\FanOfTheVan.Services.csproj"
+            "C:\\Users\\Tim\\source\\repos\\FanOfTheVan\\FanOfTheVan.Services\\FanOfTheVan.Services.csproj": {
+              "projectPath": "C:\\Users\\Tim\\source\\repos\\FanOfTheVan\\FanOfTheVan.Services\\FanOfTheVan.Services.csproj"
             }
           }
         }
