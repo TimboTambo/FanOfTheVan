@@ -11,5 +11,6 @@ namespace FanOfTheVan.Services
         Task<IEnumerable<IMarket>> GetAllMarkets();
         Task UpdateMarket(Market market);
         Task<IEnumerable<IMarket>> GetMatchingMarkets(double latitude, double longitude, int distance, OpenStatus openStatus);
+        Task<MarketsViewModel> GetMarketsThatMatchCookie(string cookie);
     }
 }

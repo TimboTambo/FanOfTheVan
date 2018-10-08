@@ -1,7 +1,7 @@
 ﻿@using FanOfTheVan.Services.Models
-@model IEnumerable<IMarket>
+@model MarketsViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Eat More Street";
 }
 <div style="margin-top: 30px">
     <h3 style="font-weight: 600">Find street food markets near you</h3>
@@ -29,7 +29,16 @@
 
 
 <div class="row" id="results-div" style="visibility: hidden">
-    <div id="marketsDiv" class="col-md-4 col-lg-4" style='height: 600px; overflow-y: scroll'></div>
+    <div id="marketsDiv" class="col-md-4 col-lg-4" style='height: 600px; overflow-y: scroll'>
+        @if (Model.Markets.Count == 0)
+        {
+            Html.RenderPartial("_MarketNoResults");
+        }
+        else
+        {
+            Html.RenderPartial("_MarketResults", Model.Markets);
+        }
+    </div>
     <div id='myMap' class="col-md-8 col-lg-8" style='height: 600px;'></div>
 </div>
 
@@ -43,7 +52,9 @@
         var startingLocation = getUserDefaultLocation();
         return new Microsoft.Maps.Map(document.getElementById('myMap'), {
             center: new Microsoft.Maps.Location(startingLocation.latitude, startingLocation.longitude),
-            zoom: 15
+            zoom: 15,
+            showLocateMeButton: false,
+            showMapTypeSelector: false
         });
     }
 
@@ -64,11 +75,14 @@
         $marketsDiv.animate({ scrollTop: $market.position().top });
     }
 
-    function handleMarketClickEvent(marketPin, map) {
+    function handleMarketDescriptionClickEvent(marketPin, map) {
         var marketId = marketPin.Metadata.Id;
         var $market = $(".market[data-id=" + marketId + "]");
+        
         $market.click(function () {
             centrePin(marketPin, map);
+            $(".market.selected").removeClass("selected");
+            $market.addClass("selected");
         })
     }
 
@@ -140,24 +154,24 @@
         var $markets = $(".market");
         var pinLayer = new Microsoft.Maps.EntityCollection();
         var boundingBox = { minLat: userLat, maxLat: userLat, minLong: userLong, maxLong: userLong };
+
         for (var i = 0; i < $markets.length; i++) {
             var market = $markets[i];
             var id = market.getAttribute("data-id");
             var lat = parseFloat(market.getAttribute("data-lat"));
+            var long = parseFloat(market.getAttribute("data-long"));
 
-            if (!boundingBox.minLat || boundingBox.minLat > lat) {
+            if (boundingBox.minLat > lat) {
                 boundingBox.minLat = lat;
             }
-            if (!boundingBox.maxLat || boundingBox.maxLat < lat) {
+            else if (boundingBox.maxLat < lat) {
                 boundingBox.maxLat = lat;
             }
 
-            var long = parseFloat(market.getAttribute("data-long"));
-
-            if (!boundingBox.minLong || boundingBox.minLong > long) {
+            if (boundingBox.minLong > long) {
                 boundingBox.minLong = long;
             }
-            if (!boundingBox.maxLong || boundingBox.maxLong < long) {
+            else if (boundingBox.maxLong < long) {
                 boundingBox.maxLong = long;
             }
 
@@ -171,12 +185,14 @@
                     title: name,
                     enableHoverStyle: true
                 });
+
             pin.Metadata = { Id: id, Lat: lat, Long: long };
             pinLayer.push(pin); 
+
             Microsoft.Maps.Events.addHandler(pin, 'click', function (e) {
                 handleMarketPointClickEvent(e, map);
             });
-            handleMarketClickEvent(pin, map);
+            handleMarketDescriptionClickEvent(pin, map);
         }
         map.entities.push(pinLayer);
         updateMapView(map, boundingBox);
@@ -233,18 +249,12 @@
         }
 
         var terms = cookie.split("|");
-        return { lat: terms[0], long: terms[1], distance: terms[2], openStatus: terms[3], searchTerm: terms[4] };
+        return { lat: parseFloat(terms[0]), long: parseFloat(terms[1]), distance: parseInt(terms[2]), openStatus: terms[3], searchTerm: terms[4] };
     }
 
     function loadMapScenario() {
         var map = initialiseMap();
         var locationPin;
-        var infobox = new Microsoft.Maps.Infobox(map.getCenter(), {
-            title: 'Title',
-            description: 'Description',
-            visible: false
-        });
-        infobox.setMap(map);
 
         $(function() {
             var $marketsDiv = $("#marketsDiv");
@@ -271,7 +281,9 @@
                 setSelectedDistance(searchCookie.distance);
                 setSearchTerm(searchCookie.searchTerm);
                 setOpenStatus(searchCookie.openStatus);
-                updateResults(parseFloat(searchCookie.lat), parseFloat(searchCookie.long), searchCookie.distance, searchCookie.openStatus);
+                locationPin = addUserPosition(searchCookie.lat, searchCookie.long, map, locationPin);
+                drawMarketsOnMap(map, searchCookie.lat, searchCookie.long);
+                $resultsContainer.css("visibility", "visible");
             }
 
             function handleSearchPositionResult(data) {

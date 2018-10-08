@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using FanOfTheVan.Models;
 using FanOfTheVan.Services;
 using FanOfTheVan.Services.Models;
-using JsonConvert = Newtonsoft.Json.JsonConvert;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace FanOfTheVan.Controllers
@@ -22,8 +20,8 @@ namespace FanOfTheVan.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var markets = await _marketService.GetAllMarkets();
-            return View(markets);
+            var model = await _marketService.GetMarketsThatMatchCookie(Request.Cookies["search"]);
+            return View(model);
         }
 
         public async Task<IActionResult> About()

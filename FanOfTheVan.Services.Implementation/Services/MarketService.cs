@@ -155,5 +155,22 @@ namespace FanOfTheVan.Services.Implementation.Services
         {
             return degrees * (float)Math.PI / 180f;
         }
+
+        public async Task<MarketsViewModel> GetMarketsThatMatchCookie(string cookie)
+        {
+            var model = new MarketsViewModel();
+            if (string.IsNullOrWhiteSpace(cookie))
+            {
+                return model;
+            }
+            var searchTerms = cookie.Split('|');
+            var latitude = double.Parse(searchTerms[0]);
+            var longitude = double.Parse(searchTerms[1]);
+            model.Distance = int.Parse(searchTerms[2]);
+            model.OpenStatus = (OpenStatus)int.Parse(searchTerms[3]);
+            model.SearchTerm = searchTerms[4];
+            model.Markets = (await GetMatchingMarkets(latitude, longitude, model.Distance, model.OpenStatus)).ToList();
+            return model;
+        }
     }
 }
