@@ -103,32 +103,15 @@
     function centrePin(locationPin, map) {
          map.setView({
             mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
-            center: new Microsoft.Maps.Location(parseFloat(locationPin.Metadata.Lat), parseFloat(locationPin.Metadata.Long)),
+            center: new Microsoft.Maps.Location(parseFloat(locationPin.Metadata.Lat), parseFloat(locationPin.Metadata.Long))
         });
     }
 
-    function addUserPosition(latitude, longitude, map, distance, locationPin) {
-        var zoomLevel = 15;
-        if (distance > 5) {
-            zoomLevel = 12;
-        }
-        else if (distance > 3) {
-            zoomLevel = 13;
-        }
-        else if (distance > 1) {
-            zoomLevel = 14;
-        }
-
-        map.setView({
-            mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
-            center: new Microsoft.Maps.Location(latitude, longitude),
-            zoom: zoomLevel
-        });
-        
+    function addUserPosition(latLong, map, locationPin) {        
         if (locationPin) {
             map.entities.remove(locationPin);
         }
-        var locationPoint = new Microsoft.Maps.Location(latitude, longitude);
+        var locationPoint = new Microsoft.Maps.Location(latLong[0], latLong[1]);
         locationPin = new Microsoft.Maps.Pushpin(locationPoint,
             {
                 title: "You"
@@ -141,14 +124,31 @@
         $marketsDiv.html(marketsHtml);
     }
     
-    function drawMarketsOnMap(map) {
+    function drawMarketsOnMap(map, userLocation) {
         var $markets = $(".market");
         var pinLayer = new Microsoft.Maps.EntityCollection();
+        var boundingBox = { minLat: userLocation[0], maxLat: userLocation[0], minLong: userLocation[1], maxLong: userLocation[1] };
         for (var i = 0; i < $markets.length; i++) {
             var market = $markets[i];
             var id = market.getAttribute("data-id");
-            var lat = market.getAttribute("data-lat");
-            var long = market.getAttribute("data-long");
+            var lat = parseFloat(market.getAttribute("data-lat"));
+
+            if (!boundingBox.minLat || boundingBox.minLat > lat) {
+                boundingBox.minLat = lat;
+            }
+            if (!boundingBox.maxLat || boundingBox.maxLat < lat) {
+                boundingBox.maxLat = lat;
+            }
+
+            var long = parseFloat(market.getAttribute("data-long"));
+
+            if (!boundingBox.minLong || boundingBox.minLong > long) {
+                boundingBox.minLong = long;
+            }
+            if (!boundingBox.maxLong || boundingBox.maxLong < long) {
+                boundingBox.maxLong = long;
+            }
+
             var name = market.getAttribute("data-name");
             var colour = market.getAttribute("data-colour");
             var pinColour = Microsoft.Maps.Color.fromHex(colour);
@@ -167,6 +167,17 @@
             handleMarketClickEvent(pin, map);
         }
         map.entities.push(pinLayer);
+        updateMapView(map, boundingBox);
+    }
+
+    function updateMapView(map, boundingBox) {
+        map.setView({
+            mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
+            bounds: Microsoft.Maps.LocationRect.fromEdges(boundingBox.maxLat + 0.01,
+                boundingBox.minLong - 0.001,
+                boundingBox.minLat - 0.01,
+                boundingBox.maxLong + 0.001)
+        });
     }
 
     function toggleShowHours() {
@@ -216,11 +227,11 @@
                 var latlong = data.resourceSets[0].resources[0].geocodePoints[0].coordinates;
                 var distance = getSelectedDistance();
                 var openStatus = getOpenStatus();
-                locationPin = addUserPosition(latlong[0], latlong[1], map, distance, locationPin);
+                locationPin = addUserPosition(latlong, map, locationPin);
                 $resultsContainer.css("visibility", "visible");
                 $.post("@Url.Action("GetMarketsNearLocation")", { lat: latlong[0], longi: latlong[1], distance: distance, openStatus: openStatus }).done(function(html) {
                     populateMarketDetails(html, $marketsDiv);
-                    drawMarketsOnMap(map);
+                    drawMarketsOnMap(map, latlong);
                 });
             }
         });

@@ -33,7 +33,10 @@
           "System.Threading": "4.3.0"
         },
         "runtime": {
-          "lib/netstandard1.3/DnsClient.dll": {}
+          "lib/netstandard1.3/DnsClient.dll": {
+            "assemblyVersion": "1.0.7.0",
+            "fileVersion": "1.0.7.0"
+          }
         }
       },
       "Microsoft.NETCore.Targets/1.1.0": {},
@@ -72,7 +75,10 @@
           "System.Reflection.Emit.Lightweight": "4.0.1"
         },
         "runtime": {
-          "lib/netstandard1.5/MongoDB.Bson.dll": {}
+          "lib/netstandard1.5/MongoDB.Bson.dll": {
+            "assemblyVersion": "2.7.0.0",
+            "fileVersion": "2.7.0.0"
+          }
         }
       },
       "MongoDB.Driver/2.7.0": {
@@ -83,7 +89,10 @@
           "System.Linq.Queryable": "4.0.1"
         },
         "runtime": {
-          "lib/netstandard1.5/MongoDB.Driver.dll": {}
+          "lib/netstandard1.5/MongoDB.Driver.dll": {
+            "assemblyVersion": "2.7.0.0",
+            "fileVersion": "2.7.0.0"
+          }
         }
       },
       "MongoDB.Driver.Core/2.7.0": {
@@ -97,7 +106,10 @@
           "System.Security.SecureString": "4.0.0"
         },
         "runtime": {
-          "lib/netstandard1.5/MongoDB.Driver.Core.dll": {}
+          "lib/netstandard1.5/MongoDB.Driver.Core.dll": {
+            "assemblyVersion": "2.7.0.0",
+            "fileVersion": "2.7.0.0"
+          }
         }
       },
       "runtime.native.System/4.3.0": {

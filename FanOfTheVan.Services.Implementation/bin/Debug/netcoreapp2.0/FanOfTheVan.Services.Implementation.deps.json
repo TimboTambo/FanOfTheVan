@@ -36,12 +36,18 @@
           "System.Threading": "4.3.0"
         },
         "runtime": {
-          "lib/netstandard1.3/DnsClient.dll": {}
+          "lib/netstandard1.3/DnsClient.dll": {
+            "assemblyVersion": "1.0.7.0",
+            "fileVersion": "1.0.7.0"
+          }
         }
       },
       "EntityFramework/5.0.0": {
         "runtime": {
-          "lib/net45/EntityFramework.dll": {}
+          "lib/net45/EntityFramework.dll": {
+            "assemblyVersion": "5.0.0.0",
+            "fileVersion": "5.0.20627.0"
+          }
         }
       },
       "Microsoft.NETCore.Targets/1.1.0": {},
@@ -80,7 +86,10 @@
           "System.Reflection.Emit.Lightweight": "4.0.1"
         },
         "runtime": {
-          "lib/netstandard1.5/MongoDB.Bson.dll": {}
+          "lib/netstandard1.5/MongoDB.Bson.dll": {
+            "assemblyVersion": "2.7.0.0",
+            "fileVersion": "2.7.0.0"
+          }
         }
       },
       "MongoDB.Driver/2.7.0": {
@@ -91,7 +100,10 @@
           "System.Linq.Queryable": "4.0.1"
         },
         "runtime": {
-          "lib/netstandard1.5/MongoDB.Driver.dll": {}
+          "lib/netstandard1.5/MongoDB.Driver.dll": {
+            "assemblyVersion": "2.7.0.0",
+            "fileVersion": "2.7.0.0"
+          }
         }
       },
       "MongoDB.Driver.Core/2.7.0": {
@@ -105,12 +117,18 @@
           "System.Security.SecureString": "4.0.0"
         },
         "runtime": {
-          "lib/netstandard1.5/MongoDB.Driver.Core.dll": {}
+          "lib/netstandard1.5/MongoDB.Driver.Core.dll": {
+            "assemblyVersion": "2.7.0.0",
+            "fileVersion": "2.7.0.0"
+          }
         }
       },
       "Newtonsoft.Json/11.0.2": {
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.0.2.21924"
+          }
         }
       },
       "runtime.native.System/4.3.0": {
@@ -219,7 +237,10 @@
           "EntityFramework": "5.0.0"
         },
         "runtime": {
-          "lib/net45/System.Data.Entity.Repository.dll": {}
+          "lib/net45/System.Data.Entity.Repository.dll": {
+            "assemblyVersion": "2.0.0.1",
+            "fileVersion": "2.0.0.1"
+          }
         }
       },
       "System.Diagnostics.Debug/4.3.0": {

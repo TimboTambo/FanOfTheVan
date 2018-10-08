@@ -7,3 +7,12 @@ C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.AssemblyInfo.cs
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.dll
 C:\Users\Tim\source\repos\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.pdb
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.deps.json
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.dll
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\bin\Debug\netcoreapp2.0\FanOfTheVan.Services.pdb
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.csprojAssemblyReference.cache
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.csproj.CoreCompileInputs.cache
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.AssemblyInfoInputs.cache
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.AssemblyInfo.cs
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.dll
+C:\Code\Other\FanOfTheVan\FanOfTheVan.Services\obj\Debug\netcoreapp2.0\FanOfTheVan.Services.pdb
