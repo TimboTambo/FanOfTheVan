@@ -3,108 +3,62 @@
 <div>
     @foreach (var market in Model)
     {
-        <div style="margin-bottom: 12px; border-bottom: 1px solid #ccc; padding: 5px 10px 0 8px; border-radius: 5px" class="market" data-id="@market.MarketId" data-lat="@market.Latitude" data-long="@market.Longitude" data-name="@market.Name" data-colour="@market.Colour">
-            <p style="font-size: 24px; margin-bottom: 0px">@market.Name Market<span class="glyphicon glyphicon-map-marker" style="color: @market.Colour; float: right"></span></p>
-            <p style="color: #606060; margin-bottom: 0">@(market.Distance.ToString("F1"))km from you</p>
-            <p style="color: #606060; margin-bottom: 5px">
-                @market.City, @market.Postcode
-            </p>
-            <div style="color: #606060;">
-                <div class="hours-toggle closed" style="border-top: 1px solid #ccc; padding: 3px 5px 0 5px;">
-                    <p style="margin-bottom: 5px">
-                        Open hours
-                        <span class="hours-arrow-icon glyphicon glyphicon-triangle-bottom" style="float: right; color: #606060; margin-top: 3px"></span>
-                    </p>
-                    @if (market.ResultDayOfWeek.HasValue)
+    <div class="market" data-id="@market.MarketId" data-lat="@market.Latitude" data-long="@market.Longitude" data-name="@market.Name" data-colour="@market.Colour">
+        <p class="fs24 mb0">@market.Name Market
+            <span class="glyphicon glyphicon-map-marker fltr" style="color: @market.Colour;"></span>
+        </p>
+        <p class="mb5 pl5">
+            <span class="glyphicon glyphicon-share-alt"></span>
+            @(market.Distance.ToString("F1"))km
+        </p>
+        <p class="cGry1 mb10 pl5">
+            @market.City, @market.Postcode
+        </p>
+        
+        @if (!string.IsNullOrWhiteSpace(market.Description))
+        {
+            if (market.Description.Length > 100)
+            {
+                <p class="description-blurb pl5">@market.Description.Substring(0, 100)
+                    <span class="cGry2">...click for more</span>
+                </p>
+            }
+            <p class="description hidden pl5">@market.Description</p>
+        }
+        <div class="cGry1">
+            <div class="hours-toggle closed bdr-top">
+                <p class="mb5">
+                    Open hours
+                    <span class="hours-arrow-icon glyphicon glyphicon-triangle-bottom fltr cGry1 mt3"></span>
+                </p>
+
+                @if (market.ResultDayOfWeek.HasValue)
+                {
+                    <div class="filter-hours bdr-top pt5 pb10">
+                        <div>@market.ResultDayOfWeek.ToString(): @market.ResultOpeningTimes.OpenTime.ToString(@"hh\:mm") - @market.ResultOpeningTimes.CloseTime.ToString(@"hh\:mm")</div>
+                        <div class="cGry2">Click to see more</div>
+                    </div>
+                }
+
+                <div class="hours-div hidden bdr-top pt5 pb10">
+                    @foreach (var day in new DayOfWeek[]{ DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday})
                     {
-                        <div class="filter-hours" style="padding-top: 5px; padding-bottom: 10px; border-top: 1px solid #ccc;">
-                            @market.ResultDayOfWeek.ToString():
-                            <div>@market.ResultOpeningTimes.OpenTime.ToString(@"hh\:mm") - @market.ResultOpeningTimes.CloseTime.ToString(@"hh\:mm")</div>
-                            <div style="color: #bbb">Click to see more</div>
+                        <div>
+                            @day.ToString()
+                            @if (market.OpeningTimes[day].IsOpen())
+                            {
+                                <span>@market.OpeningTimes[day].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[day].CloseTime.ToString(@"hh\:mm")</span>
+                            }
+                            else
+                            {
+                                <span>Closed</span>
+                            }
                         </div>
                     }
-                    
-                    <div class="hours-div" style="display: none; border-top: 1px solid #ccc; padding-top: 5px; padding-bottom: 10px">
-                        <div>
-                            Monday:
-                            @if (market.OpeningTimes[DayOfWeek.Monday].IsOpen())
-                            {
-                                <span>@market.OpeningTimes[DayOfWeek.Monday].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[DayOfWeek.Monday].CloseTime.ToString(@"hh\:mm")</span>
-                            }
-                            else
-                            {
-                                <span>Closed</span>
-                            }
-                        </div>
-                        <div>
-                            Tuesday:
-                            @if (market.OpeningTimes[DayOfWeek.Tuesday].IsOpen())
-                            {
-                                <span>@market.OpeningTimes[DayOfWeek.Tuesday].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[DayOfWeek.Tuesday].CloseTime.ToString(@"hh\:mm")</span>
-                            }
-                            else
-                            {
-                                <span>Closed</span>
-                            }
-                        </div>
-                        <div>
-                            Wednesday:
-                            @if (market.OpeningTimes[DayOfWeek.Wednesday].IsOpen())
-                            {
-                                <span>@market.OpeningTimes[DayOfWeek.Wednesday].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[DayOfWeek.Wednesday].CloseTime.ToString(@"hh\:mm")</span>
-                            }
-                            else
-                            {
-                                <span>Closed</span>
-                            }
-                        </div>
-                        <div>
-                            Thursday:
-                            @if (market.OpeningTimes[DayOfWeek.Thursday].IsOpen())
-                            {
-                                <span>@market.OpeningTimes[DayOfWeek.Thursday].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[DayOfWeek.Thursday].CloseTime.ToString(@"hh\:mm")</span>
-                            }
-                            else
-                            {
-                                <span>Closed</span>
-                            }
-                        </div>
-                        <div>
-                            Friday:
-                            @if (market.OpeningTimes[DayOfWeek.Friday].IsOpen())
-                            {
-                                <span>@market.OpeningTimes[DayOfWeek.Friday].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[DayOfWeek.Friday].CloseTime.ToString(@"hh\:mm")</span>
-                            }
-                            else
-                            {
-                                <span>Closed</span>
-                            }
-                        </div>
-                        <div>
-                            Saturday:
-                            @if (market.OpeningTimes[DayOfWeek.Saturday].IsOpen())
-                            {
-                                <span>@market.OpeningTimes[DayOfWeek.Saturday].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[DayOfWeek.Saturday].CloseTime.ToString(@"hh\:mm")</span>
-                            }
-                            else
-                            {
-                                <span>Closed</span>
-                            }
-                        </div>
-                        <div>
-                            Sunday:
-                            @if (market.OpeningTimes[DayOfWeek.Sunday].IsOpen())
-                            {
-                                <span>@market.OpeningTimes[DayOfWeek.Sunday].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[DayOfWeek.Sunday].CloseTime.ToString(@"hh\:mm")</span>
-                            }
-                            else
-                            {
-                                <span>Closed</span>
-                            }
-                        </div>
-                    </div>
+                    <div class="cGry2">Click to hide</div>
                 </div>
             </div>
         </div>
+    </div>
     }
 </div>

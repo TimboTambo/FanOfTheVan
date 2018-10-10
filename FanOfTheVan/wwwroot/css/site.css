@@ -109,12 +109,8 @@
     margin-right: 50px;
 }
 
-.market.selected {
-    background: #ecebff;
-}
-
 .market:hover {
-    background: #ecebff;
+    background: #f5f5f5;
 }
 
 .hours-toggle.open .filter-hours {
@@ -165,4 +161,75 @@
 
 #myMap {
     height: 600px;
+}
+
+.hidden {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.selected {
+    box-shadow: 1px 1px 1px 1px #aaa;
+}
+
+.cGry1 {
+    color: #606060;
+}
+
+.cGry2 {
+    color: #bbb;
+}
+
+.market {
+    margin-bottom: 12px;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px 0 8px;
+    border-radius: 5px
+}
+
+.mb0 {
+    margin-bottom: 0;
+}
+
+.mt3 {
+    margin-top: 3px;
+}
+
+.fs24 {
+    font-size: 24px;
+}
+
+.fltr {
+    float: right;
+}
+
+.mb5 {
+    margin-bottom: 5px;
+}
+
+.mb10 {
+    margin-bottom: 10px
+}
+
+.pt5 {
+    padding-top: 5px;
+}
+
+.pb10 {
+    padding-bottom: 10px;
+}
+
+.pl5 {
+    padding-left: 5px;
+}
+
+.bdr-top {
+    border-top: 1px solid #ccc;
+}
+
+.hours-toggle {
+    padding: 3px 5px 0 5px;
 }

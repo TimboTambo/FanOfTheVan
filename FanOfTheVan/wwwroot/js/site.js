@@ -169,14 +169,19 @@ function toggleShowHours() {
     var $this = $(this);
     $this.addClass("open").removeClass("closed");
     $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-top");
-    $this.find(".hours-div").toggle();
+    $this.find(".hours-div").removeClass("hidden");
 }
 
 function toggleHideHours() {
     var $this = $(this);
     $this.addClass("closed").removeClass("open");
     $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom");
-    $this.find(".hours-div").toggle();
+    $this.find(".hours-div").addClass("hidden");
+}
+
+function toggleShowDescription() {
+    var $descriptionBlurb = $(this);
+    $descriptionBlurb.addClass("hidden").next(".description").removeClass("hidden");
 }
 
 function saveSearchTerms(lat, long, distance, openStatus, searchTerm) {
@@ -216,6 +221,7 @@ function loadMapScenario() {
 
         $marketsDiv.on("click", ".hours-toggle.closed", toggleShowHours);
         $marketsDiv.on("click", ".hours-toggle.open", toggleHideHours);
+        $marketsDiv.on("click", ".description-blurb", toggleShowDescription);
 
         $("#searchBtn").click(function () {
             var searchTerm = getSearchTerm();
@@ -237,7 +243,7 @@ function loadMapScenario() {
             setOpenStatus(searchCookie.openStatus);
             locationPin = addUserPosition(searchCookie.lat, searchCookie.long, map, locationPin);
             drawMarketsOnMap(map, searchCookie.lat, searchCookie.long);
-            $resultsContainer.css("visibility", "visible");
+            $resultsContainer.removeClass("invisible");
         }
 
         function handleSearchPositionResult(data) {
@@ -252,7 +258,7 @@ function loadMapScenario() {
 
         function updateResults(lat, long, distance, openStatus) {
             locationPin = addUserPosition(lat, long, map, locationPin);
-            $resultsContainer.css("visibility", "visible");
+            $resultsContainer.removeClass("invisible");
             var url = $(".filters").data("url");
             $.post(url, { lat: lat, longi: long, distance: distance, openStatus: openStatus }).done(function (html) {
                 populateMarketDetails(html, $marketsDiv);
