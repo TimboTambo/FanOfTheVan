@@ -7,44 +7,43 @@
         <p class="fs24 mb0">@market.Name Market
             <span class="glyphicon glyphicon-map-marker fltr" style="color: @market.Colour;"></span>
         </p>
-        <p class="mb5 pl5">
+        <p class="cGry2 mb0">
+            @if (!string.IsNullOrWhiteSpace(market.StreetAddress))
+            {
+                <span>@market.StreetAddress,</span>
+            }
+            @market.City, @market.Postcode
+        </p>
+        <p class="mt10 mb0">
             <span class="glyphicon glyphicon-share-alt"></span>
             @(market.Distance.ToString("F1"))km
-        </p>
-        <p class="cGry1 mb10 pl5">
-            @market.City, @market.Postcode
         </p>
         
         @if (!string.IsNullOrWhiteSpace(market.Description))
         {
             if (market.Description.Length > 100)
             {
-                <p class="description-blurb pl5">@market.Description.Substring(0, 100)
+                <p class="description-blurb">@market.Description.Substring(0, 100)
                     <span class="cGry2">...click for more</span>
                 </p>
             }
             <p class="description hidden pl5">@market.Description</p>
         }
         <div class="cGry1">
-            <div class="hours-toggle closed bdr-top">
-                <p class="mb5">
-                    Open hours
-                    <span class="hours-arrow-icon glyphicon glyphicon-triangle-bottom fltr cGry1 mt3"></span>
-                </p>
-
+            <div class="hours-toggle closed">
                 @if (market.ResultDayOfWeek.HasValue)
                 {
-                    <div class="filter-hours bdr-top pt5 pb10">
+                    <div class="filter-hours pt5 pb10">
                         <div>@market.ResultDayOfWeek.ToString(): @market.ResultOpeningTimes.OpenTime.ToString(@"hh\:mm") - @market.ResultOpeningTimes.CloseTime.ToString(@"hh\:mm")</div>
                         <div class="cGry2">Click to see more</div>
                     </div>
                 }
 
-                <div class="hours-div hidden bdr-top pt5 pb10">
+                <div class="hours-div pt5 pb10">
                     @foreach (var day in new DayOfWeek[]{ DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday})
                     {
                         <div>
-                            @day.ToString()
+                            @day.ToString():
                             @if (market.OpeningTimes[day].IsOpen())
                             {
                                 <span>@market.OpeningTimes[day].OpenTime.ToString(@"hh\:mm") - @market.OpeningTimes[day].CloseTime.ToString(@"hh\:mm")</span>

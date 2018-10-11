@@ -153,8 +153,8 @@ function drawMarketsOnMap(map, userLat, userLong) {
 }
 
 function updateMapView(map, boundingBox) {
-    var latPadding = (boundingBox.maxLat - boundingBox.minLat) / 20;
-    var longPadding = (boundingBox.maxLong - boundingBox.minLong) / 20;
+    var latPadding = (boundingBox.maxLat - boundingBox.minLat) / 28;
+    var longPadding = (boundingBox.maxLong - boundingBox.minLong) / 28;
 
     map.setView({
         mapTypeId: Microsoft.Maps.MapTypeId.canvasLight,
@@ -168,15 +168,11 @@ function updateMapView(map, boundingBox) {
 function toggleShowHours() {
     var $this = $(this);
     $this.addClass("open").removeClass("closed");
-    $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-top");
-    $this.find(".hours-div").removeClass("hidden");
 }
 
 function toggleHideHours() {
     var $this = $(this);
     $this.addClass("closed").removeClass("open");
-    $this.find(".hours-arrow-icon").removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom");
-    $this.find(".hours-div").addClass("hidden");
 }
 
 function toggleShowDescription() {

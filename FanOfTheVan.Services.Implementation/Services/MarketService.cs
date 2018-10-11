@@ -81,7 +81,7 @@ namespace FanOfTheVan.Services.Implementation.Services
                 int r = rand.Next(255);
                 int g = rand.Next(255);
                 int b = rand.Next(255);
-                while (r + g + b > 600 && ColourIsSimilarToOtherColours(r, g, b, coloursSelectedAlready))
+                while (r + g + b > 600 || ColourIsSimilarToOtherColours(r, g, b, coloursSelectedAlready))
                 {
                     r = rand.Next(255);
                     g = rand.Next(255);

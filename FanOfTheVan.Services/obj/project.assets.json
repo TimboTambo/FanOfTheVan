@@ -5228,30 +5228,33 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tim\\.nuget\\packages\\": {},
+    "C:\\Users\\tim.lee.JUST-EAT\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Tim\\source\\repos\\FanOfTheVan\\FanOfTheVan.Services\\FanOfTheVan.Services.csproj",
+      "projectUniqueName": "C:\\Code\\Other\\FanOfTheVan\\FanOfTheVan.Services\\FanOfTheVan.Services.csproj",
       "projectName": "FanOfTheVan.Services",
-      "projectPath": "C:\\Users\\Tim\\source\\repos\\FanOfTheVan\\FanOfTheVan.Services\\FanOfTheVan.Services.csproj",
-      "packagesPath": "C:\\Users\\Tim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Tim\\source\\repos\\FanOfTheVan\\FanOfTheVan.Services\\obj\\",
+      "projectPath": "C:\\Code\\Other\\FanOfTheVan\\FanOfTheVan.Services\\FanOfTheVan.Services.csproj",
+      "packagesPath": "C:\\Users\\tim.lee.JUST-EAT\\.nuget\\packages\\",
+      "outputPath": "C:\\Code\\Other\\FanOfTheVan\\FanOfTheVan.Services\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Tim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\tim.lee.JUST-EAT\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.0"
       ],
       "sources": {
+        "C:\\LocalNuget": {},
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "http://packages.je-labs.com/nuget/Default": {},
+        "http://packages.je-labs.com/nuget/Global": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
